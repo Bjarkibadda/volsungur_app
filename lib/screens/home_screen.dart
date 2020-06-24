@@ -82,44 +82,49 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _buildVideo(Video video) {
-    return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => VideoScreen(id: video.id),
+    return Container(
+          height:0,
+          child: GestureDetector(
+      
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => VideoScreen(id: video.id),
+          ),
         ),
-      ),
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-        padding: EdgeInsets.all(10.0),
-        height: 140.0,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              offset: Offset(0, 1),
-              blurRadius: 6.0,
-            ),
-          ],
-        ),
-        child: Row(
-          children: <Widget>[
-            Image(
-              width: 150.0,
-              image: NetworkImage(video.thumbnailUrl),
-            ),
-            SizedBox(width: 10.0),
-            Expanded(
-              child: Text(
-                video.title,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18.0,
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+          padding: EdgeInsets.all(10.0),
+          height: 50,
+          width:200,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                offset: Offset(0, 1),
+                blurRadius: 6.0,
+              ),
+            ],
+          ),
+          child: Row(
+            children: <Widget>[
+              Image(
+                width: 30.0,
+                image: NetworkImage(video.thumbnailUrl),
+              ),
+              SizedBox(width: 10.0),
+              Expanded(
+                child: Text(
+                  video.title,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 10.0,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -139,38 +144,47 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('YouTube Channel'),
-      ),
-      body: _channel != null
-          ? NotificationListener<ScrollNotification>(
-              onNotification: (ScrollNotification scrollDetails) {
-                if (!_isLoading &&
-                    _channel.videos.length != int.parse(_channel.videoCount) &&
-                    scrollDetails.metrics.pixels ==
-                        scrollDetails.metrics.maxScrollExtent) {
-                  _loadMoreVideos();
-                }
-                return false;
-              },
-              child: ListView.builder(
-                itemCount: 1 + _channel.videos.length,
-                itemBuilder: (BuildContext context, int index) {
-                  if (index == 0) {
-                    return _buildProfileInfo();
-                  }
-                  Video video = _channel.videos[index - 1];
-                  return _buildVideo(video);
-                },
-              ),
-            )
-          : Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  Theme.of(context).primaryColor, // Red
+        appBar: AppBar(
+          title: Text('YouTube Channel'),
+        ),
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            _channel != null
+              ? NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification scrollDetails) {
+                    if (!_isLoading &&
+                        _channel.videos.length != int.parse(_channel.videoCount) &&
+                        scrollDetails.metrics.pixels ==
+                            scrollDetails.metrics.maxScrollExtent) {
+                      _loadMoreVideos();
+                    }
+                    return false;
+                  },
+                  child: Expanded(
+                                      child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: _channel.videos.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        
+                        Video video = _channel.videos[index];
+                        return _buildVideo(video);
+                      },
+                    ),
+                  ),
+                )
+              : Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor, // Red
+                    ),
+                  ),
                 ),
-              ),
-            ),
+                Container(height:500, child:Text('dummy'),),
+          ],
+
+        ),
     );
   }
 }
