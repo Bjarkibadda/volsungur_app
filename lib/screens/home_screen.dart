@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 20.0,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.bold,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -83,9 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _buildVideo(Video video) {
     return Container(
-          height:0,
-          child: GestureDetector(
-      
+      height: 0,
+      child: GestureDetector(
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
@@ -93,12 +92,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+          margin: EdgeInsets.symmetric(horizontal: 3.0, vertical: 5.0),
           padding: EdgeInsets.all(10.0),
-          height: 50,
-          width:200,
+          width: 200,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).accentColor,
+            border: Border.all(width: 3, color: Colors.green),
             boxShadow: [
               BoxShadow(
                 color: Colors.black12,
@@ -107,19 +106,21 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          child: Row(
+          child: Column(
             children: <Widget>[
               Image(
-                width: 30.0,
+                alignment: Alignment(-1, -1),
+                width: 150,
                 image: NetworkImage(video.thumbnailUrl),
               ),
-              SizedBox(width: 10.0),
+              SizedBox(height: 10.0),
               Expanded(
                 child: Text(
                   video.title,
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 10.0,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -144,17 +145,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('YouTube Channel'),
-        ),
-        body: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            _channel != null
+      appBar: AppBar(
+        title: Text('Völsungur'),
+      ),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          _channel != null
               ? NotificationListener<ScrollNotification>(
                   onNotification: (ScrollNotification scrollDetails) {
                     if (!_isLoading &&
-                        _channel.videos.length != int.parse(_channel.videoCount) &&
+                        _channel.videos.length !=
+                            int.parse(_channel.videoCount) &&
                         scrollDetails.metrics.pixels ==
                             scrollDetails.metrics.maxScrollExtent) {
                       _loadMoreVideos();
@@ -162,12 +164,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     return false;
                   },
                   child: Expanded(
-                                      child: ListView.builder(
+                    child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       itemCount: _channel.videos.length,
                       itemBuilder: (BuildContext context, int index) {
-                        
                         Video video = _channel.videos[index];
                         return _buildVideo(video);
                       },
@@ -181,10 +182,31 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                Container(height:500, child:Text('dummy'),),
-          ],
-
-        ),
+          Container(
+            height: 150,
+            child: Image(image: NetworkImage('https://www.volsungur.is/static/news/1584357344_volsungs-logo.jpg')),
+          ),
+          SizedBox(height: 20,),
+          Container(
+            height: 230,
+            child: Column(
+              children: <Widget>[
+                Align(alignment: Alignment.bottomCenter, child:Text('Tilkynningar',style:TextStyle(fontWeight: FontWeight.bold,fontSize: 20,) )),
+                SizedBox(height: 5,),
+                Align(alignment: Alignment.centerLeft, child:Text('Æfingar falla niður í dag 20/6/2020')),
+                SizedBox(height: 5,),
+                Align(alignment: Alignment.centerLeft, child:Text('Æfingar falla niður í dag 20/6/2020')),
+                SizedBox(height: 5,),
+                Align(alignment: Alignment.centerLeft, child:Text('Æfingar falla niður í dag 20/6/2020')),
+                SizedBox(height: 5,),
+                Align(alignment: Alignment.centerLeft, child:Text('Æfingar falla niður í dag 20/6/2020')),
+                SizedBox(height: 5,),
+                Align(alignment: Alignment.centerLeft, child:Text('Æfingar falla niður í dag 20/6/2020')),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
