@@ -7,10 +7,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter YouTube API',
+      title: 'Æfingaforrit Völsungs',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.red,
+        primaryColor: Colors.green,
+        accentColor: Colors.black,
       ),
       home: HomeScreen(),
     );
