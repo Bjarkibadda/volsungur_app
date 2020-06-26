@@ -50,31 +50,29 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundImage: NetworkImage(_channel.profilePictureUrl),
           ),
           SizedBox(width: 12.0),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  _channel.title,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  overflow: TextOverflow.ellipsis,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                _channel.title,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
                 ),
-                Text(
-                  '${_channel.subscriberCount} subscribers',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  overflow: TextOverflow.ellipsis,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                '${_channel.subscriberCount} subscribers',
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w600,
                 ),
-              ],
-            ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
           )
         ],
       ),
@@ -114,14 +112,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 image: NetworkImage(video.thumbnailUrl),
               ),
               SizedBox(height: 10.0),
-              Expanded(
-                child: Text(
-                  video.title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+              Text(
+                video.title,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 10.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],
@@ -148,64 +144,101 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('Völsungur'),
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          _channel != null
-              ? NotificationListener<ScrollNotification>(
-                  onNotification: (ScrollNotification scrollDetails) {
-                    if (!_isLoading &&
-                        _channel.videos.length !=
-                            int.parse(_channel.videoCount) &&
-                        scrollDetails.metrics.pixels ==
-                            scrollDetails.metrics.maxScrollExtent) {
-                      _loadMoreVideos();
-                    }
-                    return false;
-                  },
-                  child: Expanded(
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount: _channel.videos.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        Video video = _channel.videos[index];
-                        return _buildVideo(video);
+      body: Padding(
+        padding: EdgeInsets.all(5),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              _channel != null
+                  ? NotificationListener<ScrollNotification>(
+                      onNotification: (ScrollNotification scrollDetails) {
+                        if (!_isLoading &&
+                            _channel.videos.length !=
+                                int.parse(_channel.videoCount) &&
+                            scrollDetails.metrics.pixels ==
+                                scrollDetails.metrics.maxScrollExtent) {
+                          _loadMoreVideos();
+                        }
+                        return false;
                       },
+                      child: Container(
+                        height: 200,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount: _channel.videos.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            Video video = _channel.videos[index];
+                            return _buildVideo(video);
+                          },
+                        ),
+                      ),
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor, // Red
+                        ),
+                      ),
                     ),
-                  ),
-                )
-              : Center(
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Theme.of(context).primaryColor, // Red
+              Container(
+                padding: EdgeInsets.all(10),
+                height: 250,
+                child: Image(
+                    image: NetworkImage(
+                        'https://www.volsungur.is/static/news/1584357344_volsungs-logo.jpg')),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 250,
+                child: Column(
+                  children: <Widget>[
+                    Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Text('Tilkynningar',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ))),
+                    SizedBox(
+                      height: 5,
                     ),
-                  ),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text('Æfingar falla niður í dag 20/6/2020')),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text('Æfingar falla niður í dag 20/6/2020')),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text('Æfingar falla niður í dag 20/6/2020')),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text('Æfingar falla niður í dag 20/6/2020')),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text('Æfingar falla niður í dag 20/6/2020')),
+                  ],
                 ),
-          Container(
-            height: 150,
-            child: Image(image: NetworkImage('https://www.volsungur.is/static/news/1584357344_volsungs-logo.jpg')),
+              )
+            ],
           ),
-          SizedBox(height: 20,),
-          Container(
-            height: 230,
-            child: Column(
-              children: <Widget>[
-                Align(alignment: Alignment.bottomCenter, child:Text('Tilkynningar',style:TextStyle(fontWeight: FontWeight.bold,fontSize: 20,) )),
-                SizedBox(height: 5,),
-                Align(alignment: Alignment.centerLeft, child:Text('Æfingar falla niður í dag 20/6/2020')),
-                SizedBox(height: 5,),
-                Align(alignment: Alignment.centerLeft, child:Text('Æfingar falla niður í dag 20/6/2020')),
-                SizedBox(height: 5,),
-                Align(alignment: Alignment.centerLeft, child:Text('Æfingar falla niður í dag 20/6/2020')),
-                SizedBox(height: 5,),
-                Align(alignment: Alignment.centerLeft, child:Text('Æfingar falla niður í dag 20/6/2020')),
-                SizedBox(height: 5,),
-                Align(alignment: Alignment.centerLeft, child:Text('Æfingar falla niður í dag 20/6/2020')),
-              ],
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
