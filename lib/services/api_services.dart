@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import '../models/channel_model.dart';
-import '../models/video_model.dart';
+import '../providers/channel_model.dart';
+import '../providers/video_model.dart';
 import '../utilities/keys.dart';
 
 class APIService {
@@ -48,7 +48,7 @@ class APIService {
     Map<String, String> parameters = {
       'part': 'snippet',
       'playlistId': playlistId,
-      'maxResults': '8',
+      'maxResults': '10',
       'pageToken': _nextPageToken,
       'key': API_KEY,
     };
@@ -81,5 +81,4 @@ class APIService {
       throw json.decode(response.body)['error']['message'];
     }
   }
-
 }
