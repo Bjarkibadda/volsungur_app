@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/channel_model.dart';
-import '../models/video_model.dart';
+import '../providers/channel_model.dart';
+import '../providers/video_model.dart';
 import './video_screen.dart';
 import '../services/api_services.dart';
 
@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _initChannel() async {
     Channel channel = await APIService.instance
-        .fetchChannel(channelId: 'UC7fCGzb_ZlIHezeTKnmi-XA');
+        .fetchChannel(channelId: 'UCEPXrBkH46rMW-L-aa8rXxw');
     setState(() {
       _channel = channel;
     });
