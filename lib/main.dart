@@ -23,6 +23,10 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.black,
         ),
         home: TrainingScreen(),
+        routes: {
+          TrainingScreen.routeName: (ctx) => TrainingScreen(),
+          HomeScreen.routeName: (ctx) => HomeScreen(),
+        },
       ),
     );
   }
