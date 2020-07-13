@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:volsungur_app/widgets/app_drawer.dart';
 import '../providers/channel_model.dart';
 import '../providers/video_model.dart';
 import './video_screen.dart';
 import '../services/api_services.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const routeName = '/home_screen';
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  
   Channel _channel;
   bool _isLoading = false;
 
@@ -144,6 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('Völsungur'),
       ),
+      drawer: AppDrawer(),
       body: Padding(
         padding: EdgeInsets.all(5),
         child: SingleChildScrollView(
