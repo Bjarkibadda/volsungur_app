@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:volsungur_app/providers/practice_model.dart';
 import '../providers/practice_model.dart';
 import 'package:provider/provider.dart';
+import '../screens/video_screen.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class PracticeItem extends StatelessWidget {
@@ -17,10 +18,15 @@ class PracticeItem extends StatelessWidget {
     return ClipRRect(
           borderRadius: BorderRadius.circular(10),
       child: GridTile(
-        child: Image.network(
-            'https://img.youtube.com/vi/$videoId/hqdefault.jpg', //Image.network(
-            //data.thumbnailUrl,
-            fit: BoxFit.cover),
+        child: GestureDetector(
+          onTap: (){
+            Navigator.of(context).pushNamed(VideoScreen.routeName, arguments: videoId,);
+          },
+                child: Image.network(
+              'https://img.youtube.com/vi/$videoId/hqdefault.jpg', //Image.network(
+              //data.thumbnailUrl,
+              fit: BoxFit.cover),
+        ),
         footer: GridTileBar(
           title: Text(practiceTitle),
           backgroundColor: Colors.black87,
