@@ -1,7 +1,6 @@
 // skjár fyrir hvern flokk fyrir sig . Sýnir æfingar í lista sem þjálfarinn setur inn plús tilkynninga
 
 import 'package:flutter/material.dart';
-import 'package:volsungur_app/providers/practice_model.dart';
 import 'package:volsungur_app/widgets/app_drawer.dart';
 import '../providers/dummy_data.dart';
 import 'package:provider/provider.dart';
@@ -15,20 +14,32 @@ class TrainingScreen extends StatefulWidget {
 }
 
 class _TrainingScreenState extends State<TrainingScreen> {
+  var _isInit = true;
+  var _isLoading = true;
+
   @override
   void didChangeDependencies() {
-    Provider.of<Practices>(context).fetchTrainings();
+    if (_isInit){
+      setState(() {
+        _isLoading = true;
+      });
+    }
+    Provider.of<Practices>(context,  listen: false).fetchTrainings().then((_){
+      setState(() {
+        _isLoading = false;
+      });
+    });
+    _isInit = false;
     super.didChangeDependencies();
   }
 
   Widget build(BuildContext context) {
-    final train = Provider.of<Practices>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Völsungur'),
       ),
       drawer: AppDrawer(),
-      body: Column(
+      body: _isLoading ? Center(child:CircularProgressIndicator()) : Column(
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
@@ -37,7 +48,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
           ),
           Container(
             height: 300,
-            child: PracticeGrid(train: train),
+            child: PracticeGrid(),
           ),
           Divider(color: Colors.pink),
         ],
@@ -47,15 +58,16 @@ class _TrainingScreenState extends State<TrainingScreen> {
 }
 
 class PracticeGrid extends StatelessWidget {
-  const PracticeGrid({
-    Key key,
-    @required this.train,
-  }) : super(key: key);
+  // const PracticeGrid({
+  //   Key key,
+  //   @required this.train,
+  // }) : super(key: key);
 
-  final Practices train;
+  // final Practices train;
 
   @override
   Widget build(BuildContext context) {
+    final train = Provider.of<Practices>(context);
     return GridView.builder(
       padding: const EdgeInsets.all(10.0),
       itemCount: train.items.length,

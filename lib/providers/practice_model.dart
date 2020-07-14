@@ -7,6 +7,7 @@ class Practice with ChangeNotifier {
   final String name;
   final String url;
   final bool isRequired;
+  bool isDone;
   bool isFavorite;
 
   Practice({
@@ -14,6 +15,7 @@ class Practice with ChangeNotifier {
     @required this.name,
     @required this.url,
     @required this.isRequired,
+    this.isDone = false,
     this.isFavorite = false,
   });
 
