@@ -28,6 +28,7 @@ class Practices with ChangeNotifier {
   Future<void> fetchTrainings() async {
     const url = 'https://volsungurapp.firebaseio.com/Practices.json';
     final rsp = await http.get(url);
+    print('hello');
     final _data = json.decode(rsp.body) as Map<String, dynamic>;
     final List<Practice> loadedPractices = [];
     _data.forEach(
@@ -38,7 +39,8 @@ class Practices with ChangeNotifier {
               name: practiceData['name'],
               url: practiceData['url'],
               isRequired: practiceData['isRequired'],
-              isFavorite: practiceData['isFavorite']),
+              isFavorite: practiceData['isFavorite'],
+              ),
         );
       },
     );

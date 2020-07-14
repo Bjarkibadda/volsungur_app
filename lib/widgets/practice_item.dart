@@ -13,7 +13,7 @@ class PracticeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String videoId;
-    final data = Provider.of<Practice>(context, listen: false);
+    final data = Provider.of<Practice>(context);
     videoId = YoutubePlayer.convertUrlToId(data.url);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -31,18 +31,23 @@ class PracticeItem extends StatelessWidget {
               fit: BoxFit.cover),
         ),
         footer: GridTileBar(
-          title: Text(practiceTitle),
-          backgroundColor: Colors.black87,
-          leading: IconButton(
-            icon: Icon(
-                data.isFavorite ? Icons.done : Icons.radio_button_unchecked),
-            color: Colors.green,
-            onPressed: () {
-              data.toggleFavoriteStatus();
-              data.updateFavoriteStatus();
-            },
-          ),
-        ),
+            title: Text(practiceTitle),
+            backgroundColor: Colors.black87,
+            leading: IconButton(
+              icon: Icon(
+                  data.isFavorite ? Icons.done : Icons.radio_button_unchecked),
+              color: Colors.green,
+              onPressed: () {
+                data.toggleFavoriteStatus();
+                data.updateFavoriteStatus();
+              },
+            ),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.favorite_border,
+              ),
+              onPressed: null,
+            )),
       ),
     );
   }
