@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volsungur_app/providers/practice_model.dart';
+import 'package:volsungur_app/screens/video_screen.dart';
 import './screens/home_screen.dart';
 import './screens/training_screen.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         routes: {
           TrainingScreen.routeName: (ctx) => TrainingScreen(),
           HomeScreen.routeName: (ctx) => HomeScreen(),
+          VideoScreen.routeName: (ctx) => VideoScreen(),
         },
       ),
     );
