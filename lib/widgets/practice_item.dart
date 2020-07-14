@@ -13,16 +13,19 @@ class PracticeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String videoId;
-    final data = Provider.of<Practice>(context);
+    final data = Provider.of<Practice>(context, listen: false);
     videoId = YoutubePlayer.convertUrlToId(data.url);
     return ClipRRect(
-          borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(10),
       child: GridTile(
         child: GestureDetector(
-          onTap: (){
-            Navigator.of(context).pushNamed(VideoScreen.routeName, arguments: videoId,);
+          onTap: () {
+            Navigator.of(context).pushNamed(
+              VideoScreen.routeName,
+              arguments: videoId,
+            );
           },
-                child: Image.network(
+          child: Image.network(
               'https://img.youtube.com/vi/$videoId/hqdefault.jpg', //Image.network(
               //data.thumbnailUrl,
               fit: BoxFit.cover),
@@ -36,10 +39,11 @@ class PracticeItem extends StatelessWidget {
             color: Colors.green,
             onPressed: () {
               data.toggleFavoriteStatus();
+              data.updateFavoriteStatus();
             },
           ),
         ),
       ),
-          );
+    );
   }
 }
