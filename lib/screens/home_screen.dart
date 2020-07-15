@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:volsungur_app/providers/notifications.dart';
 import 'package:volsungur_app/widgets/app_drawer.dart';
 import '../providers/channel_model.dart';
 import '../providers/video_model.dart';
 import './video_screen.dart';
 import '../services/api_services.dart';
+import 'package:provider/provider.dart';
+import './notification_list.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home_screen';
@@ -12,14 +15,33 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  
   Channel _channel;
-  bool _isLoading = false;
+  bool _isFetching = true;
+  bool _isLoading = true;
+  var _isInit = true;
 
   @override
   void initState() {
     super.initState();
     _initChannel();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isFetching = true;
+      });
+    }
+    Provider.of<Notifications>(context, listen: false)
+        .fetchTrainings()
+        .then((_) {
+      setState(() {
+        _isFetching = false;
+      });
+    });
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   _initChannel() async {
@@ -207,36 +229,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ))),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text('Æfingar falla niður í dag 20/6/2020')),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text('Æfingar falla niður í dag 20/6/2020')),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text('Æfingar falla niður í dag 20/6/2020')),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text('Æfingar falla niður í dag 20/6/2020')),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text('Æfingar falla niður í dag 20/6/2020')),
+                    
+                        SizedBox(height: 10),
+                        NotificationList(),
+                        
                   ],
                 ),
               )
