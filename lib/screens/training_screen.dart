@@ -58,12 +58,6 @@ class _TrainingScreenState extends State<TrainingScreen> {
 }
 
 class PracticeGrid extends StatelessWidget {
-  // const PracticeGrid({
-  //   Key key,
-  //   @required this.train,
-  // }) : super(key: key);
-
-  // final Practices train;
 
   @override
   Widget build(BuildContext context) {

@@ -35,18 +35,22 @@ class PracticeItem extends StatelessWidget {
             backgroundColor: Colors.black87,
             leading: IconButton(
               icon: Icon(
-                  data.isFavorite ? Icons.done : Icons.radio_button_unchecked),
+                  data.isDone ? Icons.done : Icons.radio_button_unchecked),
+              color: Colors.green,
+              onPressed: () {
+                data.toggleDoneStatus();
+                data.updateDoneStatus();
+              },
+            ),
+            trailing: IconButton(
+              icon: Icon(data.isFavorite ? 
+                Icons.favorite : Icons.favorite_border,
+              ),
               color: Colors.green,
               onPressed: () {
                 data.toggleFavoriteStatus();
                 data.updateFavoriteStatus();
               },
-            ),
-            trailing: IconButton(
-              icon: Icon(
-                Icons.favorite_border,
-              ),
-              onPressed: null,
             )),
       ),
     );

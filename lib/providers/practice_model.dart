@@ -19,8 +19,21 @@ class Practice with ChangeNotifier {
     this.isFavorite = false,
   });
 
+  void toggleDoneStatus() {
+    isDone= !isDone;
+    notifyListeners();
+  }
+
+  Future<void> updateDoneStatus() async {
+    final url = 'https://volsungurapp.firebaseio.com/Practices/$id.json';
+    await http.patch(url,
+        body: json.encode({
+          'isDone': isDone,
+        })); // here should be error handling and also if failed we should roll back. He did id like that but this is my solution
+  }
+
   void toggleFavoriteStatus() {
-    isFavorite = !isFavorite;
+    isFavorite= !isFavorite;
     notifyListeners();
   }
 
@@ -31,4 +44,7 @@ class Practice with ChangeNotifier {
           'isFavorite': isFavorite,
         })); // here should be error handling and also if failed we should roll back. He did id like that but this is my solution
   }
+
+
+
 }
