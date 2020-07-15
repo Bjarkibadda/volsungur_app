@@ -7,6 +7,7 @@ import './screens/training_screen.dart';
 import 'package:provider/provider.dart';
 import './providers/practice_model.dart';
 import './providers/dummy_data.dart';
+import './screens/init_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.green,
           accentColor: Colors.black,
         ),
-        home: TrainingScreen(),
+        home: InitScreen(),
         routes: {
           TrainingScreen.routeName: (ctx) => TrainingScreen(),
           HomeScreen.routeName: (ctx) => HomeScreen(),
