@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
+
 import 'dart:convert';
 
 class Notification with ChangeNotifier {
@@ -12,4 +12,5 @@ Notification({
     @required this.title,
     @required this.subject,
   });
+
 }

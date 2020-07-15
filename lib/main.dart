@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import './providers/practice_model.dart';
 import './providers/dummy_data.dart';
 import './screens/init_screen.dart';
+import './providers/notifications.dart' as notice;
 
 void main() => runApp(MyApp());
 
@@ -15,22 +16,27 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (ctx) => Practices(),
-      child: MaterialApp(
-        title: 'Æfingaforrit Völsungs',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: Colors.green,
-          accentColor: Colors.black,
+    return MultiProvider(
+      providers:[
+        ChangeNotifierProvider(
+        create: (ctx) => Practices(),),
+        ChangeNotifierProvider(
+        create: (ctx) => notice.Notifications(),)
+        ],
+        child: MaterialApp(
+          title: 'Æfingaforrit Völsungs',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primaryColor: Colors.green,
+            accentColor: Colors.black,
+          ),
+          home: InitScreen(),
+          routes: {
+            TrainingScreen.routeName: (ctx) => TrainingScreen(),
+            HomeScreen.routeName: (ctx) => HomeScreen(),
+            VideoScreen.routeName: (ctx) => VideoScreen(),
+          },
         ),
-        home: InitScreen(),
-        routes: {
-          TrainingScreen.routeName: (ctx) => TrainingScreen(),
-          HomeScreen.routeName: (ctx) => HomeScreen(),
-          VideoScreen.routeName: (ctx) => VideoScreen(),
-        },
-      ),
-    );
+      );
   }
 }
