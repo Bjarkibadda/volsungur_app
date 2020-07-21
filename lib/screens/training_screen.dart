@@ -5,7 +5,7 @@ import 'package:volsungur_app/widgets/app_drawer.dart';
 import '../providers/dummy_data.dart';
 import 'package:provider/provider.dart';
 import '../widgets/practice_grid.dart';
-
+import '../widgets/app_bar.dart';
 
 class TrainingScreen extends StatefulWidget {
   static const routeName = '/training_screen';
@@ -17,7 +17,6 @@ class TrainingScreen extends StatefulWidget {
 class _TrainingScreenState extends State<TrainingScreen> {
   var _isInit = true;
   var _isLoading = true;
-  
 
   @override
   void didChangeDependencies() {
@@ -35,28 +34,57 @@ class _TrainingScreenState extends State<TrainingScreen> {
     super.didChangeDependencies();
   }
 
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Völsungur'),
+      backgroundColor: Color.fromARGB(230, 32, 32, 32),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60.0),
+        child: CustomAppBar(),
       ),
       drawer: AppDrawer(),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
-          : Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-                  child: Text('Æfingar vikunnar',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                ),
-                Container(
-                  height: 300,
-                  child: PracticeGrid(builderCount:true),
-                ),
-                Divider(color: Colors.pink),
-              ],
+          : SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    child: Text('Æfingar vikunnar',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        )),
+                  ),
+                  Container(
+                    height: 280,
+                    child: PracticeGrid(builderCount: true),
+                  ),
+                  Divider(
+                    color: Colors.green,
+                    thickness: 2,
+                    height: 30,
+                  ),
+                  Container(
+                    child: Image.network(
+                        "https://www.volsungur.is/static/files/aefingatoflur/2019-2020/aefingaplan-b.png"),
+                  ),
+                  Divider(
+                    color: Colors.green,
+                    thickness: 2,
+                    height: 30,
+                  ),
+                  Container(
+                    height: 50,
+                    child: ListView(
+                      children: <Widget>[
+                        Text('Hello world'),
+                        Text('Það er ekki æfing asni')
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
     ); //);
   }

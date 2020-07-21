@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:volsungur_app/widgets/practice_grid.dart';
+import '../widgets/app_bar.dart';
 
 class AllTrainings extends StatefulWidget {
   @override
@@ -12,42 +13,57 @@ class _AllTrainingsState extends State<AllTrainings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Völsungur')),
+        backgroundColor: Color.fromARGB(230, 32, 32, 32),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0),
+          child: CustomAppBar(),
+        ),
         body: Column(
           children: <Widget>[
             SizedBox(
               height: 12,
             ),
             ToggleButtons(
-              color: Colors.black,
-              selectedColor: Colors.pink,
+              borderColor: Colors.white,
+              selectedBorderColor: Colors.white,
+              fillColor: Colors.black38,
+              highlightColor: Colors.green,
+              color: Colors.yellow,
               isSelected: _isSelected,
               onPressed: (int index) {
                 setState(() {
                   _isSelected[index] = !_isSelected[index];
-                  
+
                   if (_isSelected[2] && index == 2) {
                     _isSelected[3] = false;
-                  } 
-                  
+                  }
+
                   if (_isSelected[3] && index == 3) {
                     _isSelected[2] = false;
                   }
 
-                   if (_isSelected[0] && index == 0) {
+                  if (_isSelected[0] && index == 0) {
                     _isSelected[1] = false;
-                  } 
-                  
+                  }
+
                   if (_isSelected[1] && index == 1) {
                     _isSelected[0] = false;
                   }
                 });
               },
               children: <Widget>[
-                Icon(Icons.radio_button_unchecked),
-                Icon(Icons.done),
-                Icon(Icons.favorite),
-                Icon(Icons.favorite_border),
+                _isSelected[0]
+                    ? Icon(Icons.radio_button_unchecked, color: Colors.green)
+                    : Icon(Icons.radio_button_unchecked, color: Colors.white),
+                _isSelected[1]
+                    ? Icon(Icons.done, color: Colors.green)
+                    : Icon(Icons.done, color: Colors.white),
+                _isSelected[2]
+                    ? Icon(Icons.favorite, color: Colors.green)
+                    : Icon(Icons.favorite, color: Colors.white),
+                _isSelected[3]
+                    ? Icon(Icons.favorite_border, color: Colors.green)
+                    : Icon(Icons.favorite_border, color: Colors.white),
               ],
             ),
             Expanded(
