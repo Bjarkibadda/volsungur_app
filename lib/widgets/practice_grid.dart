@@ -24,51 +24,33 @@ class PracticeGrid extends StatelessWidget {
     bool notFavorite = filters[3];
     print(filters);
 
-    if (done && notFavorite==false && favorite==false) {
+    if (done && notFavorite == false && favorite == false) {
       practiceData = train.doneItems;
       count = practiceData.length;
-    } 
-
-    else if (done && notFavorite) {
+    } else if (done && notFavorite) {
       practiceData = train.doneAndNotFav;
       count = practiceData.length;
-    } 
-
-    else if (done && favorite) {
+    } else if (done && favorite) {
       practiceData = train.doneAndFavItems;
       count = practiceData.length;
-    } 
-    
-    
-    else if (notDone && !notFavorite && !favorite) {
+    } else if (notDone && !notFavorite && !favorite) {
       print('notDone');
       practiceData = train.notDoneItems;
       count = practiceData.length;
-    } 
-    
-    else if (notDone && notFavorite) {
+    } else if (notDone && notFavorite) {
       practiceData = train.notDoneAndNotFavItems;
       count = practiceData.length;
-    }
-
-    else if (notDone && favorite) {
+    } else if (notDone && favorite) {
       practiceData = train.notDoneAndFavItems;
       count = practiceData.length;
-    } 
-
-     
-    else if (notFavorite && !notDone && !done) {
+    } else if (notFavorite && !notDone && !done) {
       practiceData = train.notFavoriteItems;
       count = practiceData.length;
       print('hello');
-    } 
-
-    else if (favorite && !notDone && !done) {
+    } else if (favorite && !notDone && !done) {
       practiceData = train.favoriteItems;
       count = practiceData.length;
-    } 
-    
-    else {
+    } else {
       practiceData = train.allItems;
       print('all items');
       count = practiceData.length;
@@ -77,6 +59,7 @@ class PracticeGrid extends StatelessWidget {
     return GridView.builder(
       padding: const EdgeInsets.all(10.0),
       itemCount: builderCount ? 4 : count,
+      physics: NeverScrollableScrollPhysics(),
       itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
         value: practiceData[
             i], //filters[1] ? train.favoriteItems[i] : train.allItems[i],

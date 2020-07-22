@@ -7,6 +7,7 @@ import './video_screen.dart';
 import '../services/api_services.dart';
 import 'package:provider/provider.dart';
 import './notification_list.dart';
+import '../widgets/app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home_screen';
@@ -34,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     }
     Provider.of<Notifications>(context, listen: false)
-        .fetchTrainings()
+        .fetchNotifications()
         .then((_) {
       setState(() {
         _isFetching = false;
@@ -50,58 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _channel = channel;
     });
-  }
-
-  _buildProfileInfo() {
-    return Container(
-      margin: EdgeInsets.all(20.0),
-      padding: EdgeInsets.all(20.0),
-      height: 100.0,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            offset: Offset(0, 1),
-            blurRadius: 6.0,
-          ),
-        ],
-      ),
-      child: Row(
-        children: <Widget>[
-          CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 35.0,
-            backgroundImage: NetworkImage(_channel.profilePictureUrl),
-          ),
-          SizedBox(width: 12.0),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                _channel.title,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-              Text(
-                '${_channel.subscriberCount} subscribers',
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w600,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          )
-        ],
-      ),
-    );
   }
 
   _buildVideo(Video video) {
@@ -166,8 +115,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Völsungur'),
+      backgroundColor: Color.fromARGB(230, 32, 32, 32),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60.0),
+        child: CustomAppBar(),
       ),
       drawer: AppDrawer(),
       body: Padding(
@@ -229,10 +180,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ))),
-                    
-                        SizedBox(height: 10),
-                        NotificationList(),
-                        
+                    SizedBox(height: 10),
+                    NotificationList(),
                   ],
                 ),
               )
