@@ -10,7 +10,7 @@ class Notifications with ChangeNotifier {
     return [..._allNotifications];
   }
 
-  Future<void> fetchTrainings() async {
+  Future<void> fetchNotifications() async {
     const url = 'https://volsungurapp.firebaseio.com/Notifications.json';
     final rsp = await http.get(url);
     print(json.decode(rsp.body));
@@ -19,10 +19,9 @@ class Notifications with ChangeNotifier {
     _data.forEach(
       (notificationId, notificationData) {
         loadedPractices.add(notice.Notification(
-          id: notificationId,
-          title: notificationData['title'],
-          subject: notificationData['subject']
-        ));
+            id: notificationId,
+            title: notificationData['title'],
+            subject: notificationData['subject']));
       },
     );
     _allNotifications = loadedPractices;
