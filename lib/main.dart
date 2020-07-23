@@ -11,6 +11,7 @@ import './providers/dummy_data.dart';
 import './screens/init_screen.dart';
 import './providers/notifications.dart' as notice;
 import './widgets/week_item.dart';
+import './providers/training_date_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => notice.Notifications(),
+        ),
+        ChangeNotifierProvider(
+          create:(ctx) => TrainingList(),
         )
       ],
       child: MaterialApp(
@@ -34,7 +38,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.green,
           accentColor: Colors.black,
         ),
-        home: WeekItem(), //InitScreen(), WeekItem(),
+        home: InitScreen(),//WeekItem('', DateTime.now(),'íþróttahöll','15:00' ), //InitScreen(), WeekItem(),
         routes: {
           TrainingScreen.routeName: (ctx) => TrainingScreen(),
           HomeScreen.routeName: (ctx) => HomeScreen(),

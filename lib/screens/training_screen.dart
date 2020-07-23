@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:volsungur_app/screens/notification_list.dart';
 import 'package:volsungur_app/widgets/app_drawer.dart';
 import '../providers/dummy_data.dart';
+import '../providers/training_date_list.dart';
 import 'package:provider/provider.dart';
 import '../widgets/practice_grid.dart';
 import '../widgets/app_bar.dart';
+import '../widgets/training_week.dart';
 
 class TrainingScreen extends StatefulWidget {
   static const routeName = '/training_screen';
@@ -17,18 +19,25 @@ class TrainingScreen extends StatefulWidget {
 
 class _TrainingScreenState extends State<TrainingScreen> {
   var _isInit = true;
-  var _isLoading = true;
+  var _isPracticeLoading = true;
+  var _isTrainingDateLoading = true;
 
   @override
   void didChangeDependencies() {
     if (_isInit) {
       setState(() {
-        _isLoading = true;
+        _isPracticeLoading = true;
+        _isTrainingDateLoading = true;
       });
     }
     Provider.of<Practices>(context, listen: false).fetchTrainings().then((_) {
       setState(() {
-        _isLoading = false;
+        _isPracticeLoading = false;
+      });
+    });
+    Provider.of<TrainingList>(context, listen: false).fetchTrainings().then((_){
+      setState(() {
+        _isTrainingDateLoading = false;
       });
     });
     _isInit = false;
@@ -43,7 +52,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
           child: CustomAppBar(),
         ),
         drawer: AppDrawer(),
-        body: _isLoading
+        body: _isPracticeLoading && _isTrainingDateLoading
             ? Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Column(
@@ -67,8 +76,8 @@ class _TrainingScreenState extends State<TrainingScreen> {
                       height: 30,
                     ),
                     Container(
-                      child: Image.network(
-                          "https://www.volsungur.is/static/files/aefingatoflur/2019-2020/aefingaplan-b.png"),
+                      height:150,
+                      child: TrainingWeek()
                     ),
                     Divider(
                       color: Colors.green,
