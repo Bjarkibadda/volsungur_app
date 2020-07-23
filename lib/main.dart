@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.green,
           accentColor: Colors.black,
         ),
-        home: InitScreen(), //WeekItem(),
+        home: WeekItem(), //InitScreen(), WeekItem(),
         routes: {
           TrainingScreen.routeName: (ctx) => TrainingScreen(),
           HomeScreen.routeName: (ctx) => HomeScreen(),

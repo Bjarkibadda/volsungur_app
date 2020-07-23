@@ -20,16 +20,25 @@ class WeekItem extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Center(child: Text('Æfing')),
+                  Center(child: Text('Month')),
                   Center(
-                    child: ListTile(
-                      title: Text('22',
+                    child: Container(
+                      color: Colors.pink,
+                      child: ListTile(
+                        title: Text('22',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 40, fontWeight: FontWeight.bold)),
+                        subtitle: Text(
+                          'Æfing',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold)),
-                      subtitle: Text('svona er þetta'),
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
                   ),
+                  Text('15:00')
                 ],
               ),
             ),
