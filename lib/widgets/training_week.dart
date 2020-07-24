@@ -12,7 +12,6 @@ class TrainingWeek extends StatelessWidget {
     int count = 0;
 
     return Container(
-      //height: 200,
       child: ListView.builder(
         itemCount: trainingData.length,
         padding: EdgeInsets.all(5),

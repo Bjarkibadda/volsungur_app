@@ -15,43 +15,49 @@ class PracticeItem extends StatelessWidget {
     String videoId;
     final data = Provider.of<Practice>(context);
     videoId = YoutubePlayer.convertUrlToId(data.url);
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: GridTile(
-        child: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pushNamed(
-              VideoScreen.routeName,
-              arguments: videoId,
-            );
-          },
-          child: Image.network(
-              'https://img.youtube.com/vi/$videoId/hqdefault.jpg', //Image.network(
-              //data.thumbnailUrl,
-              fit: BoxFit.cover),
-        ),
-        footer: GridTileBar(
-            title: Text(practiceTitle),
-            backgroundColor: Colors.black87,
-            leading: IconButton(
-              icon:
-                  Icon(data.isDone ? Icons.done : Icons.radio_button_unchecked),
-              color: Colors.green,
-              onPressed: () {
-                data.toggleDoneStatus();
-                data.updateDoneStatus();
-              },
-            ),
-            trailing: IconButton(
-              icon: Icon(
-                data.isFavorite ? Icons.favorite : Icons.favorite_border,
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      elevation: 10,
+      shadowColor: Colors.white,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: GridTile(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                VideoScreen.routeName,
+                arguments: videoId,
+              );
+            },
+            child: Image.network(
+                'https://img.youtube.com/vi/$videoId/hqdefault.jpg', //Image.network(
+
+                //data.thumbnailUrl,
+                fit: BoxFit.cover),
+          ),
+          footer: GridTileBar(
+              title: Text(practiceTitle),
+              backgroundColor: Colors.black87,
+              leading: IconButton(
+                icon: Icon(
+                    data.isDone ? Icons.done : Icons.radio_button_unchecked),
+                color: Colors.green,
+                onPressed: () {
+                  data.toggleDoneStatus();
+                  data.updateDoneStatus();
+                },
               ),
-              color: Colors.green,
-              onPressed: () {
-                data.toggleFavoriteStatus();
-                data.updateFavoriteStatus();
-              },
-            )),
+              trailing: IconButton(
+                icon: Icon(
+                  data.isFavorite ? Icons.favorite : Icons.favorite_border,
+                ),
+                color: Colors.green,
+                onPressed: () {
+                  data.toggleFavoriteStatus();
+                  data.updateFavoriteStatus();
+                },
+              )),
+        ),
       ),
     );
   }

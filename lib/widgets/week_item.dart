@@ -4,58 +4,76 @@ import 'package:provider/provider.dart';
 
 class WeekItem extends StatelessWidget {
   final int index;
-  // final DateTime date;
-  // final String location;
-  // final String time;
-
-  //WeekItem(this.practiceTitle, this.date, this.location, this.time);
   WeekItem(this.index);
 
   @override
   Widget build(BuildContext context) {
+    final List<String> months = [
+      'Janúar',
+      'Febrúar',
+      'Mars',
+      'Apríl',
+      'Maí',
+      'Júní',
+      'Júli',
+      'Ágúst',
+      'September',
+      'Október',
+      'Nóvember',
+      'Desember'
+    ];
+
     final data = Provider.of<TrainingList>(context).allItems;
-    print(data[0].location);
-    print(data[1].location);
     return Center(
       child: Card(
         elevation: 10,
         shadowColor: Colors.green,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        color: Colors.green,
+        color: Colors.black,
         child: Container(
-          height: 125,
+          height: 130,
           width: 125,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Center(
-                    child: Text(data[index].date,
-                        style: TextStyle(
-                          fontSize: 15,
-                        ))),
+                    child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 10.0, 0, 0),
+                  child: Text(
+                      months[int.parse(data[index].date.split('-')[1]) -
+                          1], //splittar date-inu og ber saman við month listann
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      )),
+                )),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 Center(
                   child: Container(
                     color: Colors.black,
-                    child: ListTile(
-                      title: Text(
+                    child: Center(
+                      child: Text(
                           data[index]
                               .date
                               .split('-')[2], //breyta - setja æfing eða frí
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontSize: 30,
+                              fontSize: 35,
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),
                     ),
                   ),
                 ),
-                //SizedBox(height: 10,),
-                Text(data[index].time),
-                Text(data[index].location)
+                SizedBox(
+                  height: 5,
+                ),
+                Text(data[index].time, style: TextStyle(color: Colors.white)),
+                Text(data[index].location,
+                    style: TextStyle(color: Colors.white)),
               ],
             ),
           ),
