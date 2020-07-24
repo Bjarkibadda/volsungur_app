@@ -35,7 +35,9 @@ class _TrainingScreenState extends State<TrainingScreen> {
         _isPracticeLoading = false;
       });
     });
-    Provider.of<TrainingList>(context, listen: false).fetchTrainings().then((_){
+    Provider.of<TrainingList>(context, listen: false)
+        .fetchTrainings()
+        .then((_) {
       setState(() {
         _isTrainingDateLoading = false;
       });
@@ -59,7 +61,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                      child: Text('Æfingar vikunnar',
+                      child: Text('Heimaæfingar',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -76,8 +78,19 @@ class _TrainingScreenState extends State<TrainingScreen> {
                       height: 30,
                     ),
                     Container(
-                      height:150,
-                      child: TrainingWeek()
+                      height: 190,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                              height: 20,
+                              child: Text('Næstu æfingar',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold))),
+                          Container(height: 170, child: TrainingWeek()),
+                        ],
+                      ),
                     ),
                     Divider(
                       color: Colors.green,

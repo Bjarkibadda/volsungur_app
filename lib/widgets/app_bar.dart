@@ -4,7 +4,12 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text('Völsungur'),
+      centerTitle: true,
+      title: Image.asset(
+        'assets/logo.png',
+        width: 40,
+        height: 40,
+      ),
       backgroundColor: Color.fromARGB(230, 32, 32, 32),
       elevation: 10,
       bottom: PreferredSize(

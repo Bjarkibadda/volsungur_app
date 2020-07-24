@@ -13,46 +13,54 @@ class WeekItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final data = Provider.of<TrainingList>(context).allItems[index];
-    return  Center(
-        child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          color: Colors.green,
-          child: Container(
-            height: 125,
-            width: 125,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Center(child: Text(data.date, style: TextStyle(fontSize: 15, ))),
-                  SizedBox(height: 10,),
-                  Center(
-                    child: Container(
-                      color: Colors.pink,
-                      child: ListTile(
-                        title: Text(data.date.split('/')[0],
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.bold)),
-                        // subtitle: Text(
-                        //   'Æfing',
-                        //   textAlign: TextAlign.center,
-                        //   style: TextStyle(
-                        //       fontSize: 15, fontWeight: FontWeight.bold),
-                        // ),
-                      ),
+    final data = Provider.of<TrainingList>(context).allItems;
+    print(data[0].location);
+    print(data[1].location);
+    return Center(
+      child: Card(
+        elevation: 10,
+        shadowColor: Colors.green,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        color: Colors.green,
+        child: Container(
+          height: 125,
+          width: 125,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Center(
+                    child: Text(data[index].date,
+                        style: TextStyle(
+                          fontSize: 15,
+                        ))),
+                SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: Container(
+                    color: Colors.black,
+                    child: ListTile(
+                      title: Text(
+                          data[index]
+                              .date
+                              .split('-')[2], //breyta - setja æfing eða frí
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
                     ),
                   ),
-                  //SizedBox(height: 10,),
-                  Text(data.time),
-                  Text(data.location)
-                ],
-              ),
+                ),
+                //SizedBox(height: 10,),
+                Text(data[index].time),
+                Text(data[index].location)
+              ],
             ),
           ),
         ),
-      );
+      ),
+    );
   }
 }
