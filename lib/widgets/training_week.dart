@@ -12,21 +12,16 @@ class TrainingWeek extends StatelessWidget {
     int count = 0;
 
     return Container(
-          //height: 200,
-          child: ListView(
-            padding: EdgeInsets.all(10),
-            scrollDirection: Axis.horizontal,
-            children: <Widget>[
-              WeekItem(0),
-              WeekItem(0),
-              WeekItem(0),
-              WeekItem(0),
-              WeekItem(0),
-              WeekItem(0),
-              WeekItem(0),
-
-            ],
-          ),
-        );
+      //height: 200,
+      child: ListView.builder(
+        itemCount: trainingData.length,
+        padding: EdgeInsets.all(5),
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
+          value: trainingData[index],
+          child: WeekItem(index),
+        ),
+      ),
+    );
   }
 }
