@@ -9,7 +9,9 @@ import 'package:intl/intl.dart';
 
 class TrainingList with ChangeNotifier {
   List<Training> _allTrainings = [];
-  List<Training> _weekTrainings = [];
+  final String authToken;
+
+  TrainingList(this.authToken, this._allTrainings);
 
   List<Training> get allItems {
     print(_allTrainings);
@@ -17,7 +19,8 @@ class TrainingList with ChangeNotifier {
   }
 
   Future<void> fetchTrainings() async {
-    const url = 'https://volsungurapp.firebaseio.com/kukur.json'; //breyta
+    final url =
+        'https://volsungurapp.firebaseio.com/kukur.json?auth=$authToken'; //breyta
     final rsp = await http.get(url);
     final _data = json.decode(rsp.body) as Map<String, dynamic>;
     final List<Training> loadedPractices = [];

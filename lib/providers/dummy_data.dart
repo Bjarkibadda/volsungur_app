@@ -6,6 +6,10 @@ import 'dart:convert';
 
 class Practices with ChangeNotifier {
   List<Practice> _allTrainings = [];
+  final String authToken;
+  final String userId;
+
+  Practices(this.authToken, this.userId, this._allTrainings);
 
   List<Practice> get allItems {
     return [..._allTrainings];
@@ -15,7 +19,7 @@ class Practices with ChangeNotifier {
     return _allTrainings.where((practice) => practice.isFavorite).toList();
   }
 
-   List<Practice> get notFavoriteItems {
+  List<Practice> get notFavoriteItems {
     return _allTrainings.where((practice) => !practice.isFavorite).toList();
   }
 
@@ -24,40 +28,63 @@ class Practices with ChangeNotifier {
   }
 
   List<Practice> get doneAndFavItems {
-    return _allTrainings.where((practice) => practice.isDone && practice.isFavorite).toList();
+    return _allTrainings
+        .where((practice) => practice.isDone && practice.isFavorite)
+        .toList();
   }
 
   List<Practice> get notDoneAndNotFavItems {
-    return _allTrainings.where((practice) => !practice.isDone && !practice.isFavorite).toList();
+    return _allTrainings
+        .where((practice) => !practice.isDone && !practice.isFavorite)
+        .toList();
   }
 
   List<Practice> get notDoneAndFavItems {
-    return _allTrainings.where((practice) => !practice.isDone && practice.isFavorite).toList();
+    return _allTrainings
+        .where((practice) => !practice.isDone && practice.isFavorite)
+        .toList();
   }
+
   List<Practice> get notDoneItems {
     return _allTrainings.where((practice) => !practice.isDone).toList();
   }
 
-   List<Practice> get doneAndNotFav {
-    return _allTrainings.where((practice) => practice.isDone && !practice.isFavorite).toList();
+  List<Practice> get doneAndNotFav {
+    return _allTrainings
+        .where((practice) => practice.isDone && !practice.isFavorite)
+        .toList();
   }
 
   Future<void> fetchTrainings() async {
-    const url = 'https://volsungurapp.firebaseio.com/Practices.json';
+    final url =
+        'https://volsungurapp.firebaseio.com/kalli.json?auth=$authToken';
     final rsp = await http.get(url);
-    print(json.decode(rsp.body));
     final _data = json.decode(rsp.body) as Map<String, dynamic>;
     final List<Practice> loadedPractices = [];
+    final doneUrl =
+        'https://volsungurapp.firebaseio.com/doneTrainings/$userId.json?auth=$authToken';
+    final doneRsp = await http.get(doneUrl);
+    final doneData = json.decode(doneRsp.body);
+    final favoriteUrl =
+        'https://volsungurapp.firebaseio.com/favoriteTrainings/$userId.json?auth=$authToken';
+    final favoriteRsp = await http.get(favoriteUrl);
+    final favoriteData = json.decode(favoriteRsp.body);
+
     _data.forEach(
       (practiceId, practiceData) {
+        print(practiceId);
         loadedPractices.add(
           Practice(
-              id: practiceId,
-              name: practiceData['name'],
-              url: practiceData['url'],
-              isFavorite: practiceData['isFavorite'],
-              isDone: practiceData['isDone'],
-              ),
+            id: practiceId,
+            name: practiceData['name'],
+            url: practiceData['url'],
+            isFavorite: favoriteData['$practiceId'] != null
+                ? favoriteData['$practiceId']
+                : false,
+            isDone: doneData['$practiceId'] != null
+                ? doneData['$practiceId']
+                : false,
+          ),
         );
       },
     );

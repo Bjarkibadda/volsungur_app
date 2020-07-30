@@ -4,6 +4,7 @@ import '../providers/practice_model.dart';
 import 'package:provider/provider.dart';
 import '../screens/video_screen.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import '../providers/auth.dart';
 
 class PracticeItem extends StatelessWidget {
   final String practiceTitle;
@@ -14,6 +15,7 @@ class PracticeItem extends StatelessWidget {
   Widget build(BuildContext context) {
     String videoId;
     final data = Provider.of<Practice>(context);
+    final authData = Provider.of<Auth>(context);
     videoId = YoutubePlayer.convertUrlToId(data.url);
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -44,7 +46,7 @@ class PracticeItem extends StatelessWidget {
                 color: Colors.green,
                 onPressed: () {
                   data.toggleDoneStatus();
-                  data.updateDoneStatus();
+                  data.updateDoneStatus(authData.token, authData.userId);
                 },
               ),
               trailing: IconButton(
@@ -54,7 +56,7 @@ class PracticeItem extends StatelessWidget {
                 color: Colors.green,
                 onPressed: () {
                   data.toggleFavoriteStatus();
-                  data.updateFavoriteStatus();
+                  data.updateFavoriteStatus(authData.token, authData.userId);
                 },
               )),
         ),

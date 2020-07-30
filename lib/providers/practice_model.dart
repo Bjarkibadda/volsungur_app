@@ -18,31 +18,31 @@ class Practice with ChangeNotifier {
   });
 
   void toggleDoneStatus() {
-    isDone= !isDone;
+    isDone = !isDone;
     notifyListeners();
   }
 
-  Future<void> updateDoneStatus() async {
-    final url = 'https://volsungurapp.firebaseio.com/Practices/$id.json';
-    await http.patch(url,
-        body: json.encode({
-          'isDone': isDone,
-        })); // here should be error handling and also if failed we should roll back. He did id like that but this is my solution
+  Future<void> updateDoneStatus(String auth, String userId) async {
+    final url =
+        'https://volsungurapp.firebaseio.com/doneTrainings/$userId/$id.json?auth=$auth';
+
+    await http.put(url,
+        body: json.encode(
+          isDone,
+        )); // here should be error handling and also if failed we should roll back. He did id like that but this is my solution
   }
 
   void toggleFavoriteStatus() {
-    isFavorite= !isFavorite;
+    isFavorite = !isFavorite;
     notifyListeners();
   }
 
-  Future<void> updateFavoriteStatus() async {
-    final url = 'https://volsungurapp.firebaseio.com/Practices/$id.json';
-    await http.patch(url,
-        body: json.encode({
-          'isFavorite': isFavorite,
-        })); // here should be error handling and also if failed we should roll back. He did id like that but this is my solution
+  Future<void> updateFavoriteStatus(String auth, String userId) async {
+    final url =
+        'https://volsungurapp.firebaseio.com/favoriteTrainings/$userId/$id.json?auth=$auth';
+    await http.put(url,
+        body: json.encode(
+          isFavorite,
+        )); // here should be error handling and also if failed we should roll back. He did id like that but this is my solution
   }
-
-
-
 }
