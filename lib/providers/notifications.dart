@@ -5,13 +5,17 @@ import 'dart:convert';
 
 class Notifications with ChangeNotifier {
   List<notice.Notification> _allNotifications = [];
+  final String authToken;
+
+  Notifications(this.authToken, this._allNotifications);
 
   List<notice.Notification> get allItems {
     return [..._allNotifications];
   }
 
   Future<void> fetchNotifications() async {
-    const url = 'https://volsungurapp.firebaseio.com/Notifications.json';
+    final url =
+        'https://volsungurapp.firebaseio.com/Notifications.json?auth=$authToken';
     final rsp = await http.get(url);
     print(json.decode(rsp.body));
     final _data = json.decode(rsp.body) as Map<String, dynamic>;
