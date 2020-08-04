@@ -9,7 +9,6 @@ class TrainingWeek extends StatelessWidget {
   Widget build(BuildContext context) {
     final train = Provider.of<TrainingList>(context);
     List<Training> trainingData = train.allItems;
-    int count = 0;
 
     return Container(
       child: ListView.builder(

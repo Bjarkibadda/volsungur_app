@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 
-import 'dart:convert';
 
 class Notification with ChangeNotifier {
   final String id;

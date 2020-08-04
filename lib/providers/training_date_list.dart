@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:volsungur_app/screens/all_practices_screen.dart';
-import './practice_model.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import './training_date_model.dart';
-import 'package:intl/intl.dart';
+
 
 class TrainingList with ChangeNotifier {
   List<Training> _allTrainings = [];
