@@ -4,6 +4,7 @@ import './all_practices_screen.dart';
 import './home_screen.dart';
 
 class InitScreen extends StatefulWidget {
+  static const routeName = '/init_screen';
   @override
   _InitScreenState createState() => _InitScreenState();
 }
