@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:volsungur_app/providers/practice_model.dart';
+
 import 'package:volsungur_app/screens/auth_screen.dart';
+import 'package:volsungur_app/screens/edit_profile_screen.dart';
 import 'package:volsungur_app/screens/video_screen.dart';
-import 'package:volsungur_app/widgets/training_week.dart';
+
 import './screens/home_screen.dart';
 import './screens/training_screen.dart';
-import 'package:provider/provider.dart';
-import './providers/practice_model.dart';
+
+
 import './providers/dummy_data.dart';
 import './screens/init_screen.dart';
 import './providers/notifications.dart' as notice;
-import './widgets/week_item.dart';
+
 import './providers/training_date_list.dart';
 import './providers/auth.dart';
+
+import './providers/profile.dart';
 
 void main() => runApp(MyApp());
 
@@ -26,6 +29,11 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (ctx) => Auth(),
           ),
+          ChangeNotifierProxyProvider<Auth, UserProfile>(
+            create: (_) => null,
+            update: (ctx,auth, previousPractices) => UserProfile(auth.token, auth.userId)),
+           
+
           ChangeNotifierProxyProvider<Auth, Practices>(
               create: (_) => null,
               update: (ctx, auth, previousPractices) => Practices(
@@ -58,11 +66,12 @@ class MyApp extends StatelessWidget {
               primaryColor: Colors.green,
               accentColor: Colors.black,
             ),
-            home: auth.isAuth ? InitScreen() : AuthScreen(), //InitScreen(),
+            home: auth.isSigningUp ? EditProfileScreen() : auth.isAuth ? InitScreen() :  AuthScreen(),  //InitScreen(),
             routes: {
               TrainingScreen.routeName: (ctx) => TrainingScreen(),
               HomeScreen.routeName: (ctx) => HomeScreen(),
               VideoScreen.routeName: (ctx) => VideoScreen(),
+              InitScreen.routeName: (ctx) => InitScreen(),
             },
           ),
         ));

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:volsungur_app/widgets/app_drawer.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoScreen extends StatefulWidget {

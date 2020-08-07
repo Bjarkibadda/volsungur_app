@@ -78,12 +78,8 @@ class Practices with ChangeNotifier {
             id: practiceId,
             name: practiceData['name'],
             url: practiceData['url'],
-            isFavorite: favoriteData['$practiceId'] != null
-                ? favoriteData['$practiceId']
-                : false,
-            isDone: doneData['$practiceId'] != null
-                ? doneData['$practiceId']
-                : false,
+            isFavorite: favoriteData == null ? false : favoriteData['$practiceId'] ?? false,
+            isDone: doneData == null ? false : doneData['$practiceId'] ?? false,
           ),
         );
       },

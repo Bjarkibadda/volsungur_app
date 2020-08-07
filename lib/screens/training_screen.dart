@@ -54,7 +54,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
           child: CustomAppBar(),
         ),
         drawer: AppDrawer(),
-        body: _isPracticeLoading && _isTrainingDateLoading
+        body: _isPracticeLoading || _isTrainingDateLoading
             ? Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Column(

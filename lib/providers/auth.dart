@@ -7,9 +7,14 @@ class Auth with ChangeNotifier {
   String _token;
   DateTime _expiryDate;
   String _userId;
+  bool _signUp = false;
 
   bool get isAuth {
     return token != null;
+  }
+
+  bool get isSigningUp{
+    return _signUp;
   }
 
   String get userId {
@@ -53,6 +58,9 @@ class Auth with ChangeNotifier {
           ),
         ),
       );
+      if (urlSegment == 'signupNewUser'){
+        _signUp = true;
+      }
       notifyListeners();
     } catch (error) {
       throw error;
