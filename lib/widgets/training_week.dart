@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:volsungur_app/providers/profile.dart';
 import 'package:volsungur_app/providers/training_date_model.dart';
 import './week_item.dart';
 import '../providers/training_date_list.dart';
@@ -8,15 +9,28 @@ class TrainingWeek extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final train = Provider.of<TrainingList>(context);
+    final int grp = Provider.of<UserProfile>(context).flokkur;
+    final bool gender = Provider.of<UserProfile>(context).gender;
+     print('flokkur: $grp og gender: $gender');
+     print('æfingaR: ${train.allItems}');
     List<Training> trainingData = train.allItems;
+    var filteredTrainings = trainingData.where((item) => item.grp == grp && item.gender == gender).toList();
+    trainingData.forEach((element) {
+      print(element.gender);
+      print(element.grp);
+      print('núll $grp');
+      print(gender);
+    });
+    print('hér kemur listinn $filteredTrainings');
+
 
     return Container(
       child: ListView.builder(
-        itemCount: trainingData.length,
+        itemCount: filteredTrainings.length,
         padding: EdgeInsets.all(5),
         scrollDirection: Axis.horizontal,
         itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
-          value: trainingData[index],
+          value: filteredTrainings[index],
           child: WeekItem(index),
         ),
       ),

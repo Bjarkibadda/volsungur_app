@@ -25,7 +25,9 @@ class Notifications with ChangeNotifier {
         loadedPractices.add(notice.Notification(
             id: notificationId,
             title: notificationData['title'],
-            subject: notificationData['subject']));
+            subject: notificationData['subject'],
+            gender: notificationData['gender'],
+            grp: notificationData['group']));
       },
     );
     _allNotifications = loadedPractices;

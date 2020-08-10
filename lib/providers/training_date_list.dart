@@ -19,9 +19,10 @@ class TrainingList with ChangeNotifier {
 
   Future<void> fetchTrainings() async {
     final url =
-        'https://volsungurapp.firebaseio.com/kukur.json?auth=$authToken'; //breyta
+        'https://volsungurapp.firebaseio.com/groupPractice.json?auth=$authToken'; //breyta
     final rsp = await http.get(url);
     final _data = json.decode(rsp.body) as Map<String, dynamic>;
+    print('hello gamli: ${json.decode(rsp.body)}');
     final List<Training> loadedPractices = [];
     _data.forEach(
       (trainingId, practiceData) {
@@ -32,32 +33,13 @@ class TrainingList with ChangeNotifier {
               id: trainingId,
               location: practiceData['location'],
               time: practiceData['time'],
-              date: practiceData['date']));
+              date: practiceData['date'],
+              gender: practiceData['gender'],
+              grp: practiceData['grp']));
         }
       },
     );
     _allTrainings = loadedPractices;
     notifyListeners();
   }
-
-  // List<Training> get nextWeek {
-  //   var dateFormat = DateFormat('MM-dd-yyyy');
-  //   final List<Training> loadedPractices = [];
-  //   _allTrainings.forEach((element) {
-  //     print('dateSTRING: ${element.date}');
-  //     DateTime newDate = DateTime.parse(element.date);
-  //     print('Newdate: $newDate');
-  //     print(DateTime.now().day);
-  //     int diffDays = newDate.difference(DateTime.now()).inDays;
-
-  //     String newnewDate = dateFormat.format(newDate);
-  //     if (diffDays < 7) {
-  //       print('element: $diffDays');
-  //       print(element.location);
-  //       loadedPractices.add(element);
-  //     }
-  //   });
-  //   _weekTrainings = loadedPractices;
-  //   return [..._weekTrainings];
-  //}
 }

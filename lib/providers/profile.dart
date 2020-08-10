@@ -6,6 +6,7 @@ class UserProfile with ChangeNotifier {
   final String authToken;
   final String userId;
   int _flokkur = 0;
+  bool _gender = true;
 
   UserProfile(
     this.authToken,
@@ -30,9 +31,14 @@ class UserProfile with ChangeNotifier {
     final rsp = await http.get(url);
     final _userList = json.decode(rsp.body) as Map<String, dynamic>;
     _flokkur = _userList['flokkur'];
+    _gender = _userList['gender'];
   }
 
   get flokkur {
     return _flokkur;
+  }
+
+  get gender {
+    return _gender;
   }
 }
