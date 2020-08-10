@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _isFetching = true;
       });
     }
-    Provider.of<Notifications>(context, listen: false)
+    Provider.of<Notifications>(context, listen:false)
         .fetchNotifications()
         .then((_) {
       setState(() {

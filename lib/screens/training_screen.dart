@@ -1,6 +1,7 @@
 // skjár fyrir hvern flokk fyrir sig . Sýnir æfingar í lista sem þjálfarinn setur inn plús tilkynninga
 
 import 'package:flutter/material.dart';
+import 'package:volsungur_app/providers/profile.dart';
 import 'package:volsungur_app/screens/notification_list.dart';
 import 'package:volsungur_app/widgets/app_drawer.dart';
 import '../providers/dummy_data.dart';
@@ -43,10 +44,13 @@ class _TrainingScreenState extends State<TrainingScreen> {
       });
     });
     _isInit = false;
+    Provider.of<UserProfile>(context, listen:false).fetchUser();
+  
     super.didChangeDependencies();
   }
 
   Widget build(BuildContext context) {
+    int userGrp =  Provider.of<UserProfile>(context, listen:false).flokkur;
     return Scaffold(
         backgroundColor: Color.fromARGB(230, 32, 32, 32),
         appBar: PreferredSize(
@@ -70,7 +74,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
                     ),
                     Container(
                       height: 280,
-                      child: PracticeGrid(builderCount: true),
+                      child: PracticeGrid(builderCount: true, grp: userGrp),
                     ),
                     Divider(
                       color: Colors.green,

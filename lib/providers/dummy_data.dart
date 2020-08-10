@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:volsungur_app/providers/profile.dart';
 import './practice_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:provider/provider.dart';
 
 class Practices with ChangeNotifier {
   List<Practice> _allTrainings = [];
@@ -55,6 +57,10 @@ class Practices with ChangeNotifier {
         .toList();
   }
 
+  // List<Practice> get filteredPractices(int group){
+  //   return _allTrainings.where((practice) => practice.)
+  // }
+
   Future<void> fetchTrainings() async {
     final url =
         'https://volsungurapp.firebaseio.com/kalli.json?auth=$authToken';
@@ -72,12 +78,12 @@ class Practices with ChangeNotifier {
 
     _data.forEach(
       (practiceId, practiceData) {
-        print(practiceId);
         loadedPractices.add(
           Practice(
             id: practiceId,
             name: practiceData['name'],
             url: practiceData['url'],
+            flokkur: practiceData['flokkur'],
             isFavorite: favoriteData == null ? false : favoriteData['$practiceId'] ?? false,
             isDone: doneData == null ? false : doneData['$practiceId'] ?? false,
           ),

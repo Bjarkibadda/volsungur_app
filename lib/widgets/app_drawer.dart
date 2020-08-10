@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import '../screens/training_screen.dart';
 import '../screens/home_screen.dart';
+import '../providers/auth.dart';
+import 'package:provider/provider.dart';
+import '../screens/auth_screen.dart';
+
+
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -27,6 +32,15 @@ class AppDrawer extends StatelessWidget {
                 .pushReplacementNamed(HomeScreen.routeName);
           },
         ),
+          ListTile(
+          leading: Icon(Icons.exit_to_app),
+          title: Text('Skrá út'),
+          onTap: () {
+            Navigator.of(context).pop();
+            Navigator.of(context).pushReplacementNamed('/');
+            Provider.of<Auth>(context, listen: false).logout();
+          },
+        )
       ],
     ));
   }
