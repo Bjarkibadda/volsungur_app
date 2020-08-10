@@ -8,7 +8,6 @@ import 'package:volsungur_app/screens/video_screen.dart';
 import './screens/home_screen.dart';
 import './screens/training_screen.dart';
 
-
 import './providers/dummy_data.dart';
 import './screens/init_screen.dart';
 import './providers/notifications.dart' as notice;
@@ -17,6 +16,8 @@ import './providers/training_date_list.dart';
 import './providers/auth.dart';
 
 import './providers/profile.dart';
+
+import './screens/waiting_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -31,9 +32,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProxyProvider<Auth, UserProfile>(
             create: (_) => null,
-            update: (ctx,auth, previousPractices) => UserProfile(auth.token, auth.userId)),
-           
-
+            update: (ctx, auth, previousPractices) =>
+                UserProfile(auth.token, auth.userId),
+          ),
           ChangeNotifierProxyProvider<Auth, Practices>(
               create: (_) => null,
               update: (ctx, auth, previousPractices) => Practices(
@@ -66,12 +67,23 @@ class MyApp extends StatelessWidget {
               primaryColor: Colors.green,
               accentColor: Colors.black,
             ),
-            home: auth.isSigningUp ? EditProfileScreen() : auth.isAuth ? InitScreen() :  AuthScreen(),  //InitScreen(),
+            home: auth.isSigningUp
+                ? EditProfileScreen()
+                : auth.isAuth
+                    ? InitScreen()
+                    : FutureBuilder(
+                        future: auth.autoLogin(),
+                        builder: (ctx, authResult) => authResult
+                                    .connectionState ==
+                                ConnectionState.waiting
+                            ? WaitingScreen()
+                            : AuthScreen()), //AuthScreen(),  //InitScreen(),
             routes: {
               TrainingScreen.routeName: (ctx) => TrainingScreen(),
               HomeScreen.routeName: (ctx) => HomeScreen(),
               VideoScreen.routeName: (ctx) => VideoScreen(),
               InitScreen.routeName: (ctx) => InitScreen(),
+              AuthScreen.routeName: (ctx) => AuthScreen(),
             },
           ),
         ));

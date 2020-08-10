@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volsungur_app/providers/practice_model.dart';
+import 'package:volsungur_app/providers/profile.dart';
 import '../providers/dummy_data.dart';
 import './practice_item.dart';
 
 class PracticeGrid extends StatelessWidget {
   final bool builderCount;
   final List<bool> filters;
+  final int grp;
 
   PracticeGrid({
     @required this.builderCount,
+    @required this.grp,
     this.filters = const [false, false, false, false],
   });
 
   @override
   Widget build(BuildContext context) {
+    //final int userGroup = Provider.of<UserProfile>(context).flokkur;
     final train = Provider.of<Practices>(context);
     List<Practice> practiceData;
     int count = 0;
@@ -22,7 +26,7 @@ class PracticeGrid extends StatelessWidget {
     bool done = filters[1];
     bool favorite = filters[2];
     bool notFavorite = filters[3];
-    print(filters);
+    
 
     if (done && notFavorite == false && favorite == false) {
       practiceData = train.doneItems;
@@ -56,14 +60,19 @@ class PracticeGrid extends StatelessWidget {
       count = practiceData.length;
     }
 
+    var newList = practiceData.where((item) => item.flokkur == grp).toList();
+     print('group: $grp');
+    print(newList);
+
+    count = newList.length;
+
     return GridView.builder(
       padding: const EdgeInsets.all(10.0),
       itemCount: builderCount ? 4 : count,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-        value: practiceData[
-            i], //filters[1] ? train.favoriteItems[i] : train.allItems[i],
-        child: PracticeItem(practiceData[i].name),
+        value: newList[i], //filters[1] ? train.favoriteItems[i] : train.allItems[i],
+        child: PracticeItem(newList[i].name),
       ),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,

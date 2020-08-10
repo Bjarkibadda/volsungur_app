@@ -75,7 +75,7 @@ class _ProfileInformationFormState extends State<ProfileInformationForm> {
   Map<String, dynamic> _userInformation = {
     'name': '',
     'gender': false,
-    'age': 0,
+    'flokkur': 0,
   };
 
   get genderPick{
@@ -98,7 +98,7 @@ class _ProfileInformationFormState extends State<ProfileInformationForm> {
     });
     await Provider.of<UserProfile>(context, listen: false).saveProfile(
       _userInformation['name'],
-      _userInformation['age'],
+      _userInformation['flokkur'],
       genderPick,
     );
     Navigator.of(context).pushReplacementNamed('/init_screen');
@@ -151,7 +151,7 @@ class _ProfileInformationFormState extends State<ProfileInformationForm> {
                       cursorColor: Colors.white,
                       //initialValue: 'Enter your name',
                       decoration: InputDecoration(
-                        labelText: 'Aldur',
+                        labelText: 'Flokkur',
                         labelStyle: TextStyle(color: Colors.grey),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.green),
@@ -159,11 +159,11 @@ class _ProfileInformationFormState extends State<ProfileInformationForm> {
                       ),
                       validator: (value){
                         if (value.isEmpty){
-                          return 'Vinsamlegast settu inn aldur þinn';
+                          return 'Flokkur';
                         }
                       },
                       onSaved: (value) {
-                        _userInformation['age'] = int.parse(value); // bæta við checki
+                        _userInformation['flokkur'] = int.parse(value); // bæta við checki
                       },
                     ),
                   ),
