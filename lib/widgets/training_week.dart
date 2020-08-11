@@ -11,17 +11,10 @@ class TrainingWeek extends StatelessWidget {
     final train = Provider.of<TrainingList>(context);
     final int grp = Provider.of<UserProfile>(context).flokkur;
     final bool gender = Provider.of<UserProfile>(context).gender;
-     print('flokkur: $grp og gender: $gender');
-     print('æfingaR: ${train.allItems}');
     List<Training> trainingData = train.allItems;
     var filteredTrainings = trainingData.where((item) => item.grp == grp && item.gender == gender).toList();
     trainingData.forEach((element) {
-      print(element.gender);
-      print(element.grp);
-      print('núll $grp');
-      print(gender);
     });
-    print('hér kemur listinn $filteredTrainings');
 
 
     return Container(

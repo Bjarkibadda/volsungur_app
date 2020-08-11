@@ -22,7 +22,6 @@ class UserProfile with ChangeNotifier {
           'gender': gender,
           'flokkur': flokkur,
         }));
-    print(json.encode(rsp.body));
   }
 
   Future<void> fetchUser() async {

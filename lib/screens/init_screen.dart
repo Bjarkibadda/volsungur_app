@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../screens/training_screen.dart';
 import './filtered_all_practices_screen.dart';
-import './home_screen.dart';
 
 class InitScreen extends StatefulWidget {
   static const routeName = '/init_screen';
@@ -12,9 +11,9 @@ class InitScreen extends StatefulWidget {
 class _InitScreenState extends State<InitScreen> {
   int _selectedPage = 0;
   final List<Widget> _pages = [
-    HomeScreen(),
     TrainingScreen(),
-    AllTrainings(),
+    AllTrainings(false),
+    AllTrainings(true),
   ];
 
   @override
@@ -31,11 +30,11 @@ class _InitScreenState extends State<InitScreen> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              title: Text('Forsíða'),
+              title: Text('Flokkur'),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.local_play),
-              title: Text('Flokkur'),
+              title: Text('Æfingar'),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.list),
