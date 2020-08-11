@@ -22,12 +22,23 @@ class AuthScreen extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromRGBO(260, 117, 255, 1).withOpacity(0.5),
-                  Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),
+                  Color.fromRGBO(0, 0, 0, 1).withOpacity(0.5),
+                  Color.fromRGBO(0, 150, 0, 1).withOpacity(0.9),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 stops: [0, 1],
+              ),
+            ),
+          ),
+          Positioned(
+            left: deviceSize.width / 2 - 40,
+            top:100,
+            child: Container(
+              height: 100,
+              width: 100,
+              child: Image(
+                image: AssetImage('assets/logo.png'),
               ),
             ),
           ),
@@ -39,36 +50,8 @@ class AuthScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Flexible(
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 20.0),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
-                      transform: Matrix4.rotationZ(-8 * pi / 180)
-                        ..translate(-10.0),
-                      // ..translate(-10.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.deepOrange.shade900,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 8,
-                            color: Colors.black26,
-                            offset: Offset(0, 2),
-                          )
-                        ],
-                      ),
-                      child: Text(
-                        'MyShop',
-                        style: TextStyle(
-                          color:
-                              Theme.of(context).accentTextTheme.headline1.color,
-                          fontSize: 50,
-                          fontFamily: 'Anton',
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
+                  SizedBox(
+                    height: 50,
                   ),
                   Flexible(
                     flex: deviceSize.width > 600 ? 2 : 1,
@@ -121,7 +104,8 @@ class _AuthCardState extends State<AuthCard>
       ),
     );
     // _heightAnimation.addListener(() => setState(() {}));
-    _opacityAnimation = Tween(begin:0.0, end:1.0).animate(CurvedAnimation(parent:_animationController, curve: Curves.easeIn));
+    _opacityAnimation = Tween(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(parent: _animationController, curve: Curves.easeIn));
   }
 
   void dispose() {
@@ -219,8 +203,8 @@ class _AuthCardState extends State<AuthCard>
                   ),
                   if (_authMode == AuthMode.Signup)
                     FadeTransition(
-                        opacity: _opacityAnimation,
-                        child: TextFormField(
+                      opacity: _opacityAnimation,
+                      child: TextFormField(
                         enabled: _authMode == AuthMode.Signup,
                         decoration:
                             InputDecoration(labelText: 'Confirm Password'),
