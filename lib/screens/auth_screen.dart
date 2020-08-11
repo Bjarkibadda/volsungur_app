@@ -148,8 +148,7 @@ class _AuthCardState extends State<AuthCard>
       setState(() {
         _authMode = AuthMode.Login;
       });
-      _animationController.reverse();
-      print('hello');
+      _animationController.reverse(); // skoða betur - ekki að virka
     }
   }
 

@@ -29,11 +29,9 @@ class _VideoScreenState extends State<VideoScreen> {
 
   String initialVideo() {
     if (widget.id == null) {
-      print(ModalRoute.of(context).settings.arguments);
       return ModalRoute.of(context).settings.arguments;
     }
     else{
-      print(widget.id);
       return widget.id;
     }
     

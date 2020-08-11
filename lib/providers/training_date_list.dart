@@ -13,7 +13,6 @@ class TrainingList with ChangeNotifier {
   TrainingList(this.authToken, this._allTrainings);
 
   List<Training> get allItems {
-    print(_allTrainings);
     return [..._allTrainings];
   }
 
@@ -22,7 +21,6 @@ class TrainingList with ChangeNotifier {
         'https://volsungurapp.firebaseio.com/groupPractice.json?auth=$authToken'; //breyta
     final rsp = await http.get(url);
     final _data = json.decode(rsp.body) as Map<String, dynamic>;
-    print('hello gamli: ${json.decode(rsp.body)}');
     final List<Training> loadedPractices = [];
     _data.forEach(
       (trainingId, practiceData) {

@@ -17,7 +17,6 @@ class Notifications with ChangeNotifier {
     final url =
         'https://volsungurapp.firebaseio.com/Notifications.json?auth=$authToken';
     final rsp = await http.get(url);
-    print(json.decode(rsp.body));
     final _data = json.decode(rsp.body) as Map<String, dynamic>;
     final List<notice.Notification> loadedPractices = [];
     _data.forEach(

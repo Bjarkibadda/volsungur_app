@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import '../widgets/practice_grid.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/training_week.dart';
+import '../providers/notifications.dart';
 
 class TrainingScreen extends StatefulWidget {
   static const routeName = '/training_screen';
@@ -45,6 +46,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
     });
     _isInit = false;
     Provider.of<UserProfile>(context, listen:false).fetchUser();
+    Provider.of<Notifications>(context, listen:false).fetchNotifications(); //mögulega bæta við then til að það sé pottþétt búið að loada þessu
   
     super.didChangeDependencies();
   }

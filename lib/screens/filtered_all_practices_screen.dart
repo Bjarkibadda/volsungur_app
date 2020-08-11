@@ -6,6 +6,10 @@ import 'package:provider/provider.dart';
 import '../providers/dummy_data.dart';
 
 class AllTrainings extends StatefulWidget {
+  final bool _isFiltered;
+
+  AllTrainings(this._isFiltered);
+
   @override
   _AllTrainingsState createState() => _AllTrainingsState();
 }
@@ -44,7 +48,6 @@ class _AllTrainingsState extends State<AllTrainings> {
   @override
   Widget build(BuildContext context) {
     int userGrp = Provider.of<UserProfile>(context, listen: false).flokkur;
-    print('hello user grp : $userGrp');
     final bool userGender = Provider.of<UserProfile>(context, listen: false).gender;
     return Scaffold(
         backgroundColor: Color.fromARGB(230, 32, 32, 32),
@@ -109,8 +112,9 @@ class _AllTrainingsState extends State<AllTrainings> {
                           builderCount: false,
                           gender: userGender,
                           grp: userGrp,
-                          filters: _isSelected)),
-   ngheeesssssssssssssssbbbvbbbbbbbbbbbbbbbbbbbbbbbbffffffffffgffgfgffffffvffbbbbbbbssssssss                ],
+                          filters: _isSelected,
+                          isFiltered: widget._isFiltered,)),
+                  ],
               ));
   }
 }

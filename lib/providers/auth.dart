@@ -97,20 +97,18 @@ class Auth with ChangeNotifier {
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     prefs.clear();
-    print('tokenið: $_token'); // bæta við logout functionality
+    
   }
 
   Future<bool> autoLogin() async{
     final prefs = await SharedPreferences.getInstance();
     if(!prefs.containsKey('userData')) {
-      print('gamli pungur ');
       return false;
     }
     final extrUserData = json.decode(prefs.getString('userData')) as Map<String, Object>;
     final expiryDate = DateTime.parse(extrUserData['expiryDate']);
 
     if (expiryDate.isBefore(DateTime.now())){
-      print('útrunnið');
       return false;
     }
 
