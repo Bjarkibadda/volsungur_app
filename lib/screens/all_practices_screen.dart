@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:volsungur_app/providers/profile.dart';
 import 'package:volsungur_app/widgets/practice_grid.dart';
 import '../widgets/app_bar.dart';
+import 'package:provider/provider.dart';
 
 class AllTrainings extends StatefulWidget {
   @override
@@ -12,6 +14,8 @@ class _AllTrainingsState extends State<AllTrainings> {
 
   @override
   Widget build(BuildContext context) {
+    final int userGrp = Provider.of<UserProfile>(context).flokkur;
+    final bool userGender = Provider.of<UserProfile>(context).gender;
     return Scaffold(
         backgroundColor: Color.fromARGB(230, 32, 32, 32),
         appBar: PreferredSize(
@@ -67,7 +71,7 @@ class _AllTrainingsState extends State<AllTrainings> {
               ],
             ),
             Expanded(
-                child: PracticeGrid(builderCount: false, filters: _isSelected)),
+                child: PracticeGrid(builderCount: false, gender: userGender, grp: userGrp ,filters: _isSelected)),
           ],
         ));
   }

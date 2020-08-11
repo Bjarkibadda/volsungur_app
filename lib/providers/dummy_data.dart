@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:volsungur_app/providers/profile.dart';
 import './practice_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:provider/provider.dart';
 
 class Practices with ChangeNotifier {
   List<Practice> _allTrainings = [];
@@ -84,6 +82,7 @@ class Practices with ChangeNotifier {
             name: practiceData['name'],
             url: practiceData['url'],
             flokkur: practiceData['flokkur'],
+            gender: practiceData['gender'],
             isFavorite: favoriteData == null ? false : favoriteData['$practiceId'] ?? false,
             isDone: doneData == null ? false : doneData['$practiceId'] ?? false,
           ),

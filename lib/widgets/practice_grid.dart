@@ -9,10 +9,12 @@ class PracticeGrid extends StatelessWidget {
   final bool builderCount;
   final List<bool> filters;
   final int grp;
+  final bool gender;
 
   PracticeGrid({
     @required this.builderCount,
     @required this.grp,
+    @required this.gender,
     this.filters = const [false, false, false, false],
   });
 
@@ -60,7 +62,7 @@ class PracticeGrid extends StatelessWidget {
       count = practiceData.length;
     }
 
-    var newList = practiceData.where((item) => item.flokkur == grp).toList();
+    var newList = practiceData.where((item) => item.flokkur == grp && item.gender == gender).toList();
      print('group: $grp');
     print(newList);
 

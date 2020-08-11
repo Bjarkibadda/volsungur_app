@@ -51,6 +51,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
 
   Widget build(BuildContext context) {
     int userGrp =  Provider.of<UserProfile>(context, listen:false).flokkur;
+    bool userGender = Provider.of<UserProfile>(context, listen:false).gender;
     return Scaffold(
         backgroundColor: Color.fromARGB(230, 32, 32, 32),
         appBar: PreferredSize(
@@ -74,7 +75,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
                     ),
                     Container(
                       height: 280,
-                      child: PracticeGrid(builderCount: true, grp: userGrp),
+                      child: PracticeGrid(builderCount: true, grp: userGrp, gender: userGender),
                     ),
                     Divider(
                       color: Colors.green,

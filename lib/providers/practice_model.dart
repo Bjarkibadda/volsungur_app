@@ -7,6 +7,7 @@ class Practice with ChangeNotifier {
   final String name;
   final String url;
   final int flokkur;
+  final bool gender;
   bool isDone;
   bool isFavorite;
 
@@ -15,6 +16,7 @@ class Practice with ChangeNotifier {
     @required this.name,
     @required this.url,
     @required this.flokkur,
+    @required this.gender,
     this.isDone = false,
     this.isFavorite = false,
   });
