@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volsungur_app/providers/practice_model.dart';
 import 'package:volsungur_app/providers/profile.dart';
+import 'package:volsungur_app/widgets/no_trainings.dart';
 import '../providers/dummy_data.dart';
 import './practice_item.dart';
 
@@ -18,10 +19,13 @@ class PracticeGrid extends StatelessWidget {
     this.filters = const [false, false, false, false],
   });
 
+
   @override
   Widget build(BuildContext context) {
     //final int userGroup = Provider.of<UserProfile>(context).flokkur;
     final train = Provider.of<Practices>(context);
+    print('im here $grp og mögulega líka $gender');
+    
     List<Practice> practiceData;
     int count = 0;
     bool notDone = filters[0];
@@ -67,10 +71,11 @@ class PracticeGrid extends StatelessWidget {
     print(newList);
 
     count = newList.length;
-
+    print('count $count');
+    if (count != 0){
     return GridView.builder(
       padding: const EdgeInsets.all(10.0),
-      itemCount: builderCount ? 4 : count,
+      itemCount: count < 4 ? count : builderCount ? 4 : count,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
         value: newList[i], //filters[1] ? train.favoriteItems[i] : train.allItems[i],
@@ -82,5 +87,9 @@ class PracticeGrid extends StatelessWidget {
           crossAxisSpacing: 10,
           mainAxisSpacing: 10),
     );
+    }
+    else{
+      return NoTrainings();
+    }
   }
 }
