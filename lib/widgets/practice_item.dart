@@ -28,7 +28,7 @@ class PracticeItem extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pushNamed(
                 VideoScreen.routeName,
-                arguments: videoId,
+                arguments: VideoScreen(id: videoId, title: practiceTitle)
               );
             },
             child: Image.network(
