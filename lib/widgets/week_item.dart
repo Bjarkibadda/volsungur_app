@@ -24,6 +24,7 @@ class WeekItem extends StatelessWidget {
     ];
 
     final data = Provider.of<TrainingList>(context).allItems;
+    print(data);
     return Center(
       child: Card(
         elevation: 10,
@@ -40,9 +41,7 @@ class WeekItem extends StatelessWidget {
                 Center(
                     child: Padding(
                   padding: EdgeInsets.fromLTRB(0, 10.0, 0, 0),
-                  child: Text(
-                      months[int.parse(data[index].date.split('-')[1]) -
-                          1], //splittar date-inu og ber saman við month listann
+                  child: Text(months[data[index].date.month-1],
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,
@@ -57,9 +56,8 @@ class WeekItem extends StatelessWidget {
                     color: Colors.black,
                     child: Center(
                       child: Text(
-                          data[index]
-                              .date
-                              .split('-')[2], //breyta - setja æfing eða frí
+                          data[index].date.day.toString(),
+                              //.split('-')[2], //breyta - setja æfing eða frí
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 35,
@@ -71,7 +69,7 @@ class WeekItem extends StatelessWidget {
                 SizedBox(
                   height: 5,
                 ),
-                Text(data[index].time, style: TextStyle(color: Colors.white)),
+                Text(data[index].time.toString(), style: TextStyle(color: Colors.white)),
                 Text(data[index].location,
                     style: TextStyle(color: Colors.white)),
               ],

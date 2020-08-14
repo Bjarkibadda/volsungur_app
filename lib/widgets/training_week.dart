@@ -15,8 +15,6 @@ class TrainingWeek extends StatelessWidget {
     var filteredTrainings = trainingData.where((item) => item.grp == grp && item.gender == gender).toList();
     trainingData.forEach((element) {
     });
-
-
     return Container(
       child: ListView.builder(
         itemCount: filteredTrainings.length,

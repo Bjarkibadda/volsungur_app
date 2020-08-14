@@ -7,6 +7,7 @@ class Notification with ChangeNotifier {
   final String subject;
   final bool gender;
   final int grp;
+  DateTime date;
 
 Notification({
     @required this.id,
@@ -14,5 +15,6 @@ Notification({
     @required this.subject,
     @required this.gender,
     @required this.grp,
+    this.date
   });
 }

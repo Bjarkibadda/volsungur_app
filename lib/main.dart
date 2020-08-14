@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:volsungur_app/screens/add_group_training_screen.dart';
+import 'package:volsungur_app/screens/add_notification_screen.dart';
 
 import 'package:volsungur_app/screens/auth_screen.dart';
 import 'package:volsungur_app/screens/edit_profile_screen.dart';
 import 'package:volsungur_app/screens/video_screen.dart';
 
-import './screens/home_screen.dart';
-import './screens/training_screen.dart';
+import './screens/group_screen.dart';
 
-import './providers/dummy_data.dart';
+import './providers/practices_list.dart';
 import './screens/init_screen.dart';
 import './providers/notifications.dart' as notice;
 
@@ -18,6 +19,8 @@ import './providers/auth.dart';
 import './providers/profile.dart';
 
 import './screens/waiting_screen.dart';
+
+import './screens/add_practice_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -80,10 +83,12 @@ class MyApp extends StatelessWidget {
                             : AuthScreen()), //AuthScreen(),  //InitScreen(),
             routes: {
               TrainingScreen.routeName: (ctx) => TrainingScreen(),
-              HomeScreen.routeName: (ctx) => HomeScreen(),
               VideoScreen.routeName: (ctx) => VideoScreen(),
               InitScreen.routeName: (ctx) => InitScreen(),
               AuthScreen.routeName: (ctx) => AuthScreen(),
+              AddPractice.routeName: (ctx) => AddPractice(),
+              AddNotification.routeName: (ctx) => AddNotification(),
+              AddGroupTraining.routeName: (ctx) => AddGroupTraining(),
             },
           ),
         ));

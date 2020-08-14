@@ -8,6 +8,7 @@ class Practice with ChangeNotifier {
   final String url;
   final int flokkur;
   final bool gender;
+  final DateTime date;
   bool isDone;
   bool isFavorite;
 
@@ -17,6 +18,7 @@ class Practice with ChangeNotifier {
     @required this.url,
     @required this.flokkur,
     @required this.gender,
+    this.date,
     this.isDone = false,
     this.isFavorite = false,
   });
@@ -44,9 +46,12 @@ class Practice with ChangeNotifier {
   Future<void> updateFavoriteStatus(String auth, String userId) async {
     final url =
         'https://volsungurapp.firebaseio.com/favoriteTrainings/$userId/$id.json?auth=$auth';
-    await http.put(url,
+    try {final rsp = await http.put(url,
         body: json.encode(
           isFavorite,
         )); // here should be error handling and also if failed we should roll back. He did id like that but this is my solution
-  }
+  } catch(error){
+    print('error');
+    throw Error;
+  }}
 }

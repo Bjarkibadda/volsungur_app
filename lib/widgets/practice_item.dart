@@ -31,11 +31,13 @@ class PracticeItem extends StatelessWidget {
                 arguments: VideoScreen(id: videoId, title: practiceTitle)
               );
             },
-            child: Image.network(
-                'https://img.youtube.com/vi/$videoId/hqdefault.jpg', //Image.network(
+            child:FadeInImage.assetNetwork(
+              placeholder: 'assets/logo.png',
+              image: 'https://img.youtube.com/vi/$videoId/hqdefault.jpg'
+                 //Image.network(
 
                 //data.thumbnailUrl,
-                fit: BoxFit.cover),
+            ),
           ),
           footer: GridTileBar(
               title: Text(practiceTitle),

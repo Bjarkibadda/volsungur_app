@@ -73,6 +73,7 @@ class Practices with ChangeNotifier {
         'https://volsungurapp.firebaseio.com/favoriteTrainings/$userId.json?auth=$authToken';
     final favoriteRsp = await http.get(favoriteUrl);
     final favoriteData = json.decode(favoriteRsp.body);
+    
 
     _data.forEach(
       (practiceId, practiceData) {
@@ -85,11 +86,26 @@ class Practices with ChangeNotifier {
             gender: practiceData['gender'],
             isFavorite: favoriteData == null ? false : favoriteData['$practiceId'] ?? false,
             isDone: doneData == null ? false : doneData['$practiceId'] ?? false,
+            date: DateTime.parse(practiceData['date'])
           ),
         );
       },
     );
-    _allTrainings = loadedPractices;
+    _allTrainings = loadedPractices.reversed.toList();
     notifyListeners();
+  }
+
+    Future<void> addPractice(Practice practice) async {
+    final DateTime date = DateTime.now();
+    final url =
+        'https://volsungurapp.firebaseio.com/kalli.json?auth=$authToken';
+    final rsp = await http.post(url,
+        body: json.encode({
+          'name': practice.name,
+          'gender': practice.gender,
+          'flokkur': practice.flokkur,
+          'url': practice.url,
+          'date': date.toIso8601String()
+        }));
   }
 }

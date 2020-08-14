@@ -10,16 +10,18 @@ class NotificationList extends StatelessWidget {
     final notifications = Provider.of<Notifications>(context).allItems;
     final bool gender = Provider.of<UserProfile>(context).gender;
     final int grp = Provider.of<UserProfile>(context).flokkur;
-    final filteredList = notifications.where((notification) => notification.gender == gender && notification.grp == grp).toList();
+    final filteredList = notifications
+        .where((notification) =>
+            notification.gender == gender && notification.grp == grp)
+        .toList();
 
     return Container(
-        padding: EdgeInsets.all(5),
-        height: 200,
-        child: ListView.builder(
-          itemCount:
-              filteredList.length < 4 // if there are fewer then 4.
-                  ? filteredList.length
-                  : 4,
+      padding: EdgeInsets.all(5),
+      height: 200,
+      child: ListView.builder(
+          itemCount: filteredList.length < 4 // if there are fewer then 4.
+              ? filteredList.length
+              : 4,
           itemBuilder: (ctx, i) {
             final item = filteredList[i];
             return Card(
@@ -29,15 +31,14 @@ class NotificationList extends StatelessWidget {
               child: ListTile(
                 leading:
                     Icon(Icons.notification_important, color: Colors.white),
-                title: Text(
-                    DateFormat('dd-MM-yyy').format(DateTime.now()) +
-                        '    ${item.title}',
+                title: Text('${item.title}',
                     style: TextStyle(color: Colors.white)),
+                trailing: Text(DateFormat('dd-MM-yyy').format(item.date), textAlign: TextAlign.right, style: TextStyle(color: Colors.white)),
                 //${notifications.allItems[i].title}',
                 //  style: TextStyle(color: Colors.white))),
               ),
             );
           }),
-        );
+    );
   }
 }

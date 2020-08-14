@@ -3,7 +3,7 @@ import 'package:volsungur_app/providers/profile.dart';
 import 'package:volsungur_app/widgets/practice_grid.dart';
 import '../widgets/app_bar.dart';
 import 'package:provider/provider.dart';
-import '../providers/dummy_data.dart';
+import '../providers/practices_list.dart';
 
 class AllTrainings extends StatefulWidget {
   final bool _isFiltered;
