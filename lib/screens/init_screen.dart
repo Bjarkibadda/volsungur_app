@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../screens/training_screen.dart';
+import '../screens/group_screen.dart';
 import './filtered_all_practices_screen.dart';
 
 class InitScreen extends StatefulWidget {

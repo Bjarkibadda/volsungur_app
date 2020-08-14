@@ -21,15 +21,35 @@ class Notifications with ChangeNotifier {
     final List<notice.Notification> loadedPractices = [];
     _data.forEach(
       (notificationId, notificationData) {
-        loadedPractices.add(notice.Notification(
+        loadedPractices.add(
+          notice.Notification(
             id: notificationId,
             title: notificationData['title'],
             subject: notificationData['subject'],
             gender: notificationData['gender'],
-            grp: notificationData['group']));
+            grp: notificationData['grp'],
+            date: DateTime.parse(notificationData['date']),
+          ),
+        );
       },
     );
     _allNotifications = loadedPractices;
     notifyListeners();
+  }
+
+  Future<void> addNotification(notice.Notification newNotification) async {
+    // bæta við villumeðhöndlun
+    final date = DateTime.now();
+    print(newNotification.subject);
+    final url =
+        'https://volsungurapp.firebaseio.com/Notifications.json?auth=$authToken';
+    final rsp = await http.post(url,
+        body: json.encode({
+          'title': newNotification.title,
+          'gender': newNotification.gender,
+          'grp': newNotification.grp,
+          'subject': newNotification.subject,
+          'date': date.toIso8601String()
+        }));
   }
 }

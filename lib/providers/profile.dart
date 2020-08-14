@@ -7,6 +7,7 @@ class UserProfile with ChangeNotifier {
   final String userId;
   int _flokkur = 0;
   bool _gender = true;
+  bool _coach = false;
 
   UserProfile(
     this.authToken,
@@ -21,6 +22,7 @@ class UserProfile with ChangeNotifier {
           'name': name,
           'gender': gender,
           'flokkur': flokkur,
+          'coach' : false,
         }));
   }
 
@@ -31,6 +33,7 @@ class UserProfile with ChangeNotifier {
     final _userList = json.decode(rsp.body) as Map<String, dynamic>;
     _flokkur = _userList['flokkur'];
     _gender = _userList['gender'];
+    _coach = _userList['coach'];
   }
 
   get flokkur {
@@ -39,5 +42,9 @@ class UserProfile with ChangeNotifier {
 
   get gender {
     return _gender;
+  }
+
+    get coach {
+    return _coach;
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:volsungur_app/providers/profile.dart';
 import 'package:volsungur_app/screens/notification_list.dart';
 import 'package:volsungur_app/widgets/app_drawer.dart';
-import '../providers/dummy_data.dart';
+import '../providers/practices_list.dart';
 import '../providers/training_date_list.dart';
 import 'package:provider/provider.dart';
 import '../widgets/practice_grid.dart';
@@ -13,7 +13,7 @@ import '../widgets/training_week.dart';
 import '../providers/notifications.dart';
 
 class TrainingScreen extends StatefulWidget {
-  static const routeName = '/training_screen';
+  static const routeName = '/group_screen';
 
   @override
   _TrainingScreenState createState() => _TrainingScreenState();
@@ -23,6 +23,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
   var _isInit = true;
   var _isPracticeLoading = true;
   var _isTrainingDateLoading = true;
+  var _isNotificationsLoading = true;
 
   @override
   void didChangeDependencies() {
@@ -46,7 +47,11 @@ class _TrainingScreenState extends State<TrainingScreen> {
     });
     _isInit = false;
     Provider.of<UserProfile>(context, listen:false).fetchUser();
-    Provider.of<Notifications>(context, listen:false).fetchNotifications(); //mögulega bæta við then til að það sé pottþétt búið að loada þessu
+    Provider.of<Notifications>(context, listen:false).fetchNotifications().then((_){
+      setState(() {
+        _isNotificationsLoading = false;
+      });
+    }); //mögulega bæta við then til að það sé pottþétt búið að loada þessu
   
     super.didChangeDependencies();
   }
@@ -54,14 +59,15 @@ class _TrainingScreenState extends State<TrainingScreen> {
   Widget build(BuildContext context) {
     int userGrp =  Provider.of<UserProfile>(context, listen:false).flokkur;
     bool userGender = Provider.of<UserProfile>(context, listen:false).gender;
+    bool _isCoach = Provider.of<UserProfile>(context, listen:false).gender;
     return Scaffold(
         backgroundColor: Color.fromARGB(230, 32, 32, 32),
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
           child: CustomAppBar(),
         ),
-        drawer: AppDrawer(),
-        body: _isPracticeLoading || _isTrainingDateLoading
+        drawer: AppDrawer(_isCoach),
+        body: _isPracticeLoading || _isTrainingDateLoading || _isNotificationsLoading
             ? Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Column(

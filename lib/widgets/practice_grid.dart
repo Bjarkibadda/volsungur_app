@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volsungur_app/providers/practice_model.dart';
 import 'package:volsungur_app/widgets/no_trainings.dart';
-import '../providers/dummy_data.dart';
+import '../providers/practices_list.dart';
 import './practice_item.dart';
 
 class PracticeGrid extends StatelessWidget {

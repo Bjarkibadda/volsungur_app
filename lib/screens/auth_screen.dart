@@ -1,8 +1,11 @@
 import 'dart:math';
+import 'package:volsungur_app/Exceptions/database_exception.dart';
+
 import '../providers/auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../Exceptions/database_exception.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -33,7 +36,7 @@ class AuthScreen extends StatelessWidget {
           ),
           Positioned(
             left: deviceSize.width / 2 - 40,
-            top:100,
+            top: 100,
             child: Container(
               height: 100,
               width: 100,
@@ -42,23 +45,21 @@ class AuthScreen extends StatelessWidget {
               ),
             ),
           ),
-          SingleChildScrollView(
-            child: Container(
-              height: deviceSize.height,
-              width: deviceSize.width,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Flexible(
-                    flex: deviceSize.width > 600 ? 2 : 1,
-                    child: AuthCard(),
-                  ),
-                ],
-              ),
+          Container(
+            height: deviceSize.height,
+            width: deviceSize.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: 50,
+                ),
+                Flexible(
+                  flex: deviceSize.width > 600 ? 2 : 1,
+                  child: AuthCard(),
+                ),
+              ],
             ),
           ),
         ],
@@ -89,6 +90,22 @@ class _AuthCardState extends State<AuthCard>
   AnimationController _animationController;
   Animation<Size> _heightAnimation;
   Animation<double> _opacityAnimation;
+
+  void errorDialog(String errormsg) {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              title: Text('Villa'),
+              content: Text(errormsg),
+              actions: <Widget>[
+                FlatButton( 
+                    child: Text('Reyna aftur'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    })
+              ],
+            ));
+  }
 
   @override
   void initState() {
@@ -122,17 +139,33 @@ class _AuthCardState extends State<AuthCard>
     setState(() {
       _isLoading = true;
     });
-    if (_authMode == AuthMode.Login) {
-      await Provider.of<Auth>(context, listen: false).login(
-        _authData['email'],
-        _authData['password'],
-      );
-    } else {
-      await Provider.of<Auth>(context, listen: false).signup(
-        _authData['email'],
-        _authData['password'],
-      );
+    try {
+      if (_authMode == AuthMode.Login) {
+        await Provider.of<Auth>(context, listen: false).login(
+          _authData['email'],
+          _authData['password'],
+        );
+      } else {
+        await Provider.of<Auth>(context, listen: false).signup(
+          _authData['email'],
+          _authData['password'],
+        );
+      }
+    } on DatabaseError catch (error) {
+      var errorMessage = 'Auðkenning gekk ekki';
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = 'Það er skráður notandi með þetta tölvupóstfang';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'Rangt Lykilorð. Reyndu aftur';
+      }
+      errorDialog(errorMessage);
+      print(errorMessage);
+    } catch (error) {
+      const errorMessage = 'Eitthvað fór úrskeiðis. Vinsamlegast reyndu aftur';
+      print(errorMessage);
+      errorDialog(errorMessage);
     }
+
     setState(() {
       _isLoading = false;
     });

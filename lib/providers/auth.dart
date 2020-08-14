@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:volsungur_app/Exceptions/database_exception.dart';
 
 class Auth with ChangeNotifier {
   String _token;
@@ -49,9 +50,11 @@ class Auth with ChangeNotifier {
           },
         ),
       );
+      print(response.body);
       final responseData = json.decode(response.body);
       if (responseData['error'] != null) {
-        throw Error;
+
+      throw DatabaseError(responseData['error']['message']);
       }
       _token = responseData['idToken'];
       _userId = responseData['localId'];
