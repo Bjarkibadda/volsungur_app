@@ -32,7 +32,7 @@ class WeekItem extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         color: Colors.black,
         child: Container(
-          height: 130,
+          height: 140,
           width: 125,
           child: Center(
             child: Column(
@@ -72,6 +72,7 @@ class WeekItem extends StatelessWidget {
                 Text(data[index].time.toString(), style: TextStyle(color: Colors.white)),
                 Text(data[index].location,
                     style: TextStyle(color: Colors.white)),
+                SizedBox(height:10),
               ],
             ),
           ),

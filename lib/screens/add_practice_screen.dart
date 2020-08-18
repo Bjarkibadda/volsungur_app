@@ -21,6 +21,7 @@ class _AddPracticeState extends State<AddPractice> {
     'flokkur': 0,
     'url': '',
     'id' :'',
+    'information': '',
   };
 
   get genderPick{
@@ -45,7 +46,8 @@ class _AddPracticeState extends State<AddPractice> {
         id: '',
         flokkur: _practiceInfo['flokkur'],
         gender: genderPick,
-        url: _practiceInfo['url']));
+        url: _practiceInfo['url'],
+        information: _practiceInfo['information']));
     Navigator.of(context).pushReplacementNamed('/init_screen');
   }
 
@@ -107,6 +109,15 @@ class _AddPracticeState extends State<AddPractice> {
                           else{
                             _practiceInfo['url'] = value; // skoða betur
                           }
+                        },
+                          //style: TextStyle(color: Colors.white),
+                        ),
+                            TextFormField(
+                              keyboardType: TextInputType.multiline,
+                              maxLines: null,
+                          decoration: InputDecoration(labelText: 'Upplýsingar um æfingu'),
+                        onSaved: (value){
+                          _practiceInfo['information'] = value;
                         },
                           //style: TextStyle(color: Colors.white),
                         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:volsungur_app/screens/add_group_training_screen.dart';
 import 'package:volsungur_app/screens/add_notification_screen.dart';
@@ -22,7 +23,13 @@ import './screens/waiting_screen.dart';
 
 import './screens/add_practice_screen.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(MyApp());
+  });
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -69,6 +76,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primaryColor: Colors.green,
               accentColor: Colors.black,
+              fontFamily: 'Alata'
             ),
             home: auth.isSigningUp
                 ? EditProfileScreen()

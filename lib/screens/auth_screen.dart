@@ -40,8 +40,11 @@ class AuthScreen extends StatelessWidget {
             child: Container(
               height: 100,
               width: 100,
-              child: Image(
-                image: AssetImage('assets/logo.png'),
+              child: Hero(
+                child: Image(
+                  image: AssetImage('assets/logo.png'),
+                ),
+                tag: 'logo',
               ),
             ),
           ),
@@ -98,7 +101,7 @@ class _AuthCardState extends State<AuthCard>
               title: Text('Villa'),
               content: Text(errormsg),
               actions: <Widget>[
-                FlatButton( 
+                FlatButton(
                     child: Text('Reyna aftur'),
                     onPressed: () {
                       Navigator.of(context).pop();
