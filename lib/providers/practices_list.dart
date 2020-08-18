@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:volsungur_app/widgets/practice_grid.dart';
 import './practice_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -86,11 +87,14 @@ class Practices with ChangeNotifier {
             gender: practiceData['gender'],
             isFavorite: favoriteData == null ? false : favoriteData['$practiceId'] ?? false,
             isDone: doneData == null ? false : doneData['$practiceId'] ?? false,
-            date: DateTime.parse(practiceData['date'])
-          ),
-        );
+            date: DateTime.parse(practiceData['date'],),
+            information: practiceData['information'],
+          ),  
+             );
+             print(practiceData['information']);     
       },
     );
+    
     _allTrainings = loadedPractices.reversed.toList();
     notifyListeners();
   }
@@ -105,7 +109,8 @@ class Practices with ChangeNotifier {
           'gender': practice.gender,
           'flokkur': practice.flokkur,
           'url': practice.url,
-          'date': date.toIso8601String()
+          'date': date.toIso8601String(),
+          'information': practice.information
         }));
   }
 }

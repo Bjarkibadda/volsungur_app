@@ -8,8 +8,9 @@ import '../providers/auth.dart';
 
 class PracticeItem extends StatelessWidget {
   final String practiceTitle;
+  final String practiceInformation;
 
-  PracticeItem(this.practiceTitle);
+  PracticeItem(this.practiceTitle, this.practiceInformation);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class PracticeItem extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pushNamed(
                 VideoScreen.routeName,
-                arguments: VideoScreen(id: videoId, title: practiceTitle)
+                arguments: VideoScreen(id: videoId, title: practiceTitle, information: practiceInformation,)
               );
             },
             child:FadeInImage.assetNetwork(

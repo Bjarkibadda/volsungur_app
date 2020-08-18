@@ -46,20 +46,22 @@ class _TrainingScreenState extends State<TrainingScreen> {
       });
     });
     _isInit = false;
-    Provider.of<UserProfile>(context, listen:false).fetchUser();
-    Provider.of<Notifications>(context, listen:false).fetchNotifications().then((_){
+    Provider.of<UserProfile>(context, listen: false).fetchUser();
+    Provider.of<Notifications>(context, listen: false)
+        .fetchNotifications()
+        .then((_) {
       setState(() {
         _isNotificationsLoading = false;
       });
     }); //mögulega bæta við then til að það sé pottþétt búið að loada þessu
-  
+
     super.didChangeDependencies();
   }
 
   Widget build(BuildContext context) {
-    int userGrp =  Provider.of<UserProfile>(context, listen:false).flokkur;
-    bool userGender = Provider.of<UserProfile>(context, listen:false).gender;
-    bool _isCoach = Provider.of<UserProfile>(context, listen:false).gender;
+    int userGrp = Provider.of<UserProfile>(context, listen: false).flokkur;
+    bool userGender = Provider.of<UserProfile>(context, listen: false).gender;
+    bool _isCoach = Provider.of<UserProfile>(context, listen: false).gender;
     return Scaffold(
         backgroundColor: Color.fromARGB(230, 32, 32, 32),
         appBar: PreferredSize(
@@ -67,7 +69,9 @@ class _TrainingScreenState extends State<TrainingScreen> {
           child: CustomAppBar(),
         ),
         drawer: AppDrawer(_isCoach),
-        body: _isPracticeLoading || _isTrainingDateLoading || _isNotificationsLoading
+        body: _isPracticeLoading ||
+                _isTrainingDateLoading ||
+                _isNotificationsLoading
             ? Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Column(
@@ -76,18 +80,19 @@ class _TrainingScreenState extends State<TrainingScreen> {
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: Text('Heimaæfingar',
                           style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          )),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontFamily: 'Alata')),
                     ),
                     Container(
                       height: 280,
-                      child: PracticeGrid(builderCount: true, grp: userGrp, gender: userGender),
+                      child: PracticeGrid(
+                          builderCount: true, grp: userGrp, gender: userGender),
                     ),
                     Divider(
                       color: Colors.green,
-                      thickness: 2,
+                      thickness: 0.5,
                       height: 30,
                     ),
                     Container(
@@ -95,21 +100,28 @@ class _TrainingScreenState extends State<TrainingScreen> {
                       child: Column(
                         children: <Widget>[
                           Container(
-                              height: 20,
+                              height: 22,
                               child: Text('Næstu æfingar',
                                   style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 16,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold))),
-                          Container(height: 170, child: TrainingWeek()),
+                          Container(height: 160, child: TrainingWeek()),
                         ],
                       ),
                     ),
                     Divider(
                       color: Colors.green,
-                      thickness: 2,
+                      thickness: 0.5,
                       height: 30,
                     ),
+                    Container(
+                        height: 26,
+                        child: Text('Tilkynningar',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold))),
                     Container(
                       height: 200,
                       child:

@@ -6,8 +6,9 @@ class VideoScreen extends StatefulWidget {
   static const routeName = '/video_screen';
   final String id;
   final String title;
+  final String information;
 
-  VideoScreen({this.id, this.title});
+  VideoScreen({this.id, this.title, this.information});
 
   @override
   _VideoScreenState createState() => _VideoScreenState();
@@ -39,6 +40,7 @@ class _VideoScreenState extends State<VideoScreen> {
         autoPlay: false,
       ),
     );
+    final VideoScreen arg = ModalRoute.of(context).settings.arguments;
   }
 
   void launchYoutube(url) async {
@@ -117,7 +119,8 @@ class _VideoScreenState extends State<VideoScreen> {
                             child: Column(
                               children: <Widget>[
                                 Text(
-                                  '1. Borða vel \n\n 2. Sofa vel, \n\n3. Halda fókus',
+                                  
+                                  arg.information,
                                   style: TextStyle(color: Colors.white,
                                   ),
                                 ),

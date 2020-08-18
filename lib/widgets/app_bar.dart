@@ -5,10 +5,13 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      title: Image.asset(
-        'assets/logo.png',
-        width: 40,
-        height: 40,
+      title: Hero(
+              child: Image.asset(
+          'assets/logo.png',
+          width: 40,
+          height: 40,
+        ),
+        tag: 'logo',
       ),
       backgroundColor: Color.fromARGB(230, 32, 32, 32),
       elevation: 10,

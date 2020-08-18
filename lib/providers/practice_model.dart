@@ -6,6 +6,7 @@ class Practice with ChangeNotifier {
   final String id;
   final String name;
   final String url;
+  final String information;
   final int flokkur;
   final bool gender;
   final DateTime date;
@@ -21,6 +22,7 @@ class Practice with ChangeNotifier {
     this.date,
     this.isDone = false,
     this.isFavorite = false,
+    this.information = '',
   });
 
   void toggleDoneStatus() {

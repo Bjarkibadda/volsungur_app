@@ -62,11 +62,11 @@ class PracticeGrid extends StatelessWidget {
       return GridView.builder(
         padding: const EdgeInsets.all(10.0),
         itemCount: count < 4 ? count : builderCount ? 4 : count,
-        physics: NeverScrollableScrollPhysics(),
+        physics: builderCount ? NeverScrollableScrollPhysics() : null,
         itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
           value: practiceData[
               i], //filters[1] ? train.favoriteItems[i] : train.allItems[i],
-          child: PracticeItem(practiceData[i].name),
+          child: PracticeItem(practiceData[i].name, practiceData[i].information),
         ),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
