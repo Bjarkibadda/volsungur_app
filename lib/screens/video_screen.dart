@@ -20,10 +20,7 @@ class _VideoScreenState extends State<VideoScreen> {
 
 
   String initialVideo() {
-    print('hello maodsfa');
     final VideoScreen args = ModalRoute.of(context).settings.arguments;
-    print(args.id);
-    print(widget.id);
     if (widget.id == null) {
       return args.id;
     } else {

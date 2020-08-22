@@ -24,7 +24,6 @@ class WeekItem extends StatelessWidget {
     ];
 
     final data = Provider.of<TrainingList>(context).allItems;
-    print(data);
     return Center(
       child: Card(
         elevation: 10,

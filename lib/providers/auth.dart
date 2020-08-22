@@ -18,7 +18,7 @@ class Auth with ChangeNotifier {
     return token != null;
   }
 
-  bool get isSigningUp{
+  bool get isSigningUp {
     return _signUp;
   }
 
@@ -50,11 +50,9 @@ class Auth with ChangeNotifier {
           },
         ),
       );
-      print(response.body);
       final responseData = json.decode(response.body);
       if (responseData['error'] != null) {
-
-      throw DatabaseError(responseData['error']['message']);
+        throw DatabaseError(responseData['error']['message']);
       }
       _token = responseData['idToken'];
       _userId = responseData['localId'];
@@ -65,17 +63,20 @@ class Auth with ChangeNotifier {
           ),
         ),
       );
-      if (urlSegment == 'signupNewUser'){
+      if (urlSegment == 'signupNewUser') {
         _signUp = true;
       }
       _autologout();
       notifyListeners();
       final prefs = await SharedPreferences.getInstance();
 
-      final userData = json.encode({'token': _token, 'userId': _userId, 'expiryDate': _expiryDate.toIso8601String()});
+      final userData = json.encode({
+        'token': _token,
+        'userId': _userId,
+        'expiryDate': _expiryDate.toIso8601String()
+      });
 
       prefs.setString('userData', userData);
-
     } catch (error) {
       throw error;
     }
@@ -100,18 +101,18 @@ class Auth with ChangeNotifier {
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     prefs.clear();
-    
   }
 
-  Future<bool> autoLogin() async{
+  Future<bool> autoLogin() async {
     final prefs = await SharedPreferences.getInstance();
-    if(!prefs.containsKey('userData')) {
+    if (!prefs.containsKey('userData')) {
       return false;
     }
-    final extrUserData = json.decode(prefs.getString('userData')) as Map<String, Object>;
+    final extrUserData =
+        json.decode(prefs.getString('userData')) as Map<String, Object>;
     final expiryDate = DateTime.parse(extrUserData['expiryDate']);
 
-    if (expiryDate.isBefore(DateTime.now())){
+    if (expiryDate.isBefore(DateTime.now())) {
       return false;
     }
 
@@ -121,8 +122,6 @@ class Auth with ChangeNotifier {
     notifyListeners();
     _autologout();
     return true;
-
-
   }
 
   void _autologout() {

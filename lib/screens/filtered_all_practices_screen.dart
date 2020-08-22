@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:volsungur_app/providers/profile.dart';
 import 'package:volsungur_app/widgets/practice_grid.dart';
-import '../widgets/app_bar.dart';
 import 'package:provider/provider.dart';
 import '../providers/practices_list.dart';
 
@@ -21,23 +20,39 @@ class _AllTrainingsState extends State<AllTrainings> {
   var _isLoadingUser = true;
 
   @override
+  void initState() {
+    _isLoadingUser = true;
+    _isLoading = true;
+    super.initState();
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+  }
+
+
+  @override
   void didChangeDependencies() {
     if (_isInit) {
+      if (mounted){
       setState(() {
         _isLoading = true;
-      });
+      });}
     }
 
     Provider.of<Practices>(context, listen :false).fetchTrainings().then((_) {
+      if(mounted){
       setState(() {
         _isLoading = false;
-      });
+      });}
     });
 
     Provider.of<UserProfile>(context, listen :false).fetchUser().then((_) {
+      if(mounted){
       setState(() {
         _isLoadingUser = false;
-      });
+      });}
     });
 
     _isInit = false;
@@ -49,14 +64,8 @@ class _AllTrainingsState extends State<AllTrainings> {
   Widget build(BuildContext context) {
     int userGrp = Provider.of<UserProfile>(context, listen: false).flokkur;
     final bool userGender = Provider.of<UserProfile>(context, listen: false).gender;
-    return Scaffold(
-        backgroundColor: Color.fromARGB(230, 32, 32, 32),
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(60.0),
-          child: CustomAppBar(),
-        ),
-        body: _isLoading || _isLoadingUser
-            ? Center(child: CircularProgressIndicator())
+    return  _isLoading || _isLoadingUser
+            ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.green),),)
             : Column(
                 children: <Widget>[
                   SizedBox(
@@ -107,6 +116,7 @@ class _AllTrainingsState extends State<AllTrainings> {
                           : Icon(Icons.favorite_border, color: Colors.white),
                     ],
                   ),
+                  SizedBox(height:20),
                   Expanded(
                       child: PracticeGrid(
                           builderCount: false,
@@ -115,6 +125,6 @@ class _AllTrainingsState extends State<AllTrainings> {
                           filters: _isSelected,
                           isFiltered: widget._isFiltered,)),
                   ],
-              ));
+              );
   }
 }

@@ -91,10 +91,10 @@ class _AddNotification extends State<AddNotification> {
                         ),
                         Container(
                           height: 60,
-                          child: TextField(
+                          child: TextFormField(
                             decoration:
                                 InputDecoration(labelText: 'Nánari upplýsingar'),
-                            onSubmitted: (value) {
+                            onSaved: (value) {
                               _notificationInfo['subject'] = value;
                             },
                             //style: TextStyle(color: Colors.white),

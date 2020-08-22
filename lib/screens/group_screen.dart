@@ -2,13 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:volsungur_app/providers/profile.dart';
-import 'package:volsungur_app/screens/notification_list.dart';
-import 'package:volsungur_app/widgets/app_drawer.dart';
+import 'package:volsungur_app/widgets/notification_list.dart';
 import '../providers/practices_list.dart';
 import '../providers/training_date_list.dart';
 import 'package:provider/provider.dart';
 import '../widgets/practice_grid.dart';
-import '../widgets/app_bar.dart';
 import '../widgets/training_week.dart';
 import '../providers/notifications.dart';
 
@@ -28,32 +26,40 @@ class _TrainingScreenState extends State<TrainingScreen> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
+      if(mounted){
       setState(() {
         _isPracticeLoading = true;
         _isTrainingDateLoading = true;
-      });
+      });}
     }
+
     Provider.of<Practices>(context, listen: false).fetchTrainings().then((_) {
+      if(mounted){
       setState(() {
         _isPracticeLoading = false;
-      });
+      });}
     });
+
     Provider.of<TrainingList>(context, listen: false)
         .fetchTrainings()
         .then((_) {
+          if(mounted){
       setState(() {
         _isTrainingDateLoading = false;
-      });
+      });}
     });
+
     _isInit = false;
+
     Provider.of<UserProfile>(context, listen: false).fetchUser();
     Provider.of<Notifications>(context, listen: false)
         .fetchNotifications()
         .then((_) {
+          if(mounted){
       setState(() {
         _isNotificationsLoading = false;
-      });
-    }); //mögulega bæta við then til að það sé pottþétt búið að loada þessu
+      });}
+    });
 
     super.didChangeDependencies();
   }
@@ -61,74 +67,72 @@ class _TrainingScreenState extends State<TrainingScreen> {
   Widget build(BuildContext context) {
     int userGrp = Provider.of<UserProfile>(context, listen: false).flokkur;
     bool userGender = Provider.of<UserProfile>(context, listen: false).gender;
-    bool _isCoach = Provider.of<UserProfile>(context, listen: false).gender;
-    return Scaffold(
-        backgroundColor: Color.fromARGB(230, 32, 32, 32),
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(60.0),
-          child: CustomAppBar(),
-        ),
-        drawer: AppDrawer(_isCoach),
-        body: _isPracticeLoading ||
-                _isTrainingDateLoading ||
-                _isNotificationsLoading
-            ? Center(child: CircularProgressIndicator())
-            : SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                      child: Text('Heimaæfingar',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontFamily: 'Alata')),
-                    ),
-                    Container(
-                      height: 280,
-                      child: PracticeGrid(
-                          builderCount: true, grp: userGrp, gender: userGender),
-                    ),
-                    Divider(
-                      color: Colors.green,
-                      thickness: 0.5,
-                      height: 30,
-                    ),
-                    Container(
-                      height: 190,
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                              height: 22,
-                              child: Text('Næstu æfingar',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold))),
-                          Container(height: 160, child: TrainingWeek()),
-                        ],
-                      ),
-                    ),
-                    Divider(
-                      color: Colors.green,
-                      thickness: 0.5,
-                      height: 30,
-                    ),
-                    Container(
-                        height: 26,
-                        child: Text('Tilkynningar',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold))),
-                    Container(
-                      height: 200,
-                      child:
-                          NotificationList(), // skoða hvort ég þurfi ekki eitthvað að villuprófa - await  og eitthvað.
-                    ),
-                  ],
+    return _isPracticeLoading ||
+            _isTrainingDateLoading ||
+            _isNotificationsLoading
+        ? Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+            ),
+          )
+        : SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  child: Text('Heimaæfingar',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontFamily: 'Alata')),
                 ),
-              )); //);
+                Container(
+                  height: 280,
+                  child: PracticeGrid(
+                      builderCount: true, grp: userGrp, gender: userGender),
+                ),
+                Divider(
+                  color: Colors.green,
+                  thickness: 0.5,
+                  height: 30,
+                ),
+                Container(
+                  height: 230,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(bottom:10),
+                          height: 30,
+                          child: Text('Næstu æfingar',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold))),
+                      Container(height: 160, child: TrainingWeek()),
+                    ],
+                  ),
+                ),
+                Divider(
+                  color: Colors.green,
+                  thickness: 0.5,
+                  height: 30,
+                ),
+                Container(
+                    height: 26,
+                    margin: EdgeInsets.only(bottom:10),
+                    child: Text('Tilkynningar',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold))),
+                Container(
+                  height: 200,
+                  child:
+                      NotificationList(), // skoða hvort ég þurfi ekki eitthvað að villuprófa - await  og eitthvað.
+                ),
+              ],
+            ),
+          ); //);
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:volsungur_app/widgets/practice_grid.dart';
 import './practice_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;

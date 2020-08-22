@@ -35,7 +35,7 @@ class Notifications with ChangeNotifier {
         );
       },
     );
-    _allNotifications = loadedPractices;
+    _allNotifications = List.from(loadedPractices.reversed);
     notifyListeners();
     }
     } on Error catch(error){
@@ -48,7 +48,7 @@ class Notifications with ChangeNotifier {
   Future<void> addNotification(notice.Notification newNotification) async {
     // bæta við villumeðhöndlun
     final date = DateTime.now();
-    print(newNotification.subject);
+    print('hello world: ${newNotification.subject}');
     final url =
         'https://volsungurapp.firebaseio.com/Notifications.json?auth=$authToken';
     try{final rsp = await http.post(url,

@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:volsungur_app/widgets/app_bar.dart';
+import 'package:volsungur_app/widgets/app_drawer.dart';
 import '../screens/group_screen.dart';
 import './filtered_all_practices_screen.dart';
+import '../providers/profile.dart';
+import 'package:provider/provider.dart';
 
 class InitScreen extends StatefulWidget {
   static const routeName = '/init_screen';
   @override
   _InitScreenState createState() => _InitScreenState();
 }
+
+
 
 class _InitScreenState extends State<InitScreen> {
   int _selectedPage = 0;
@@ -18,7 +24,12 @@ class _InitScreenState extends State<InitScreen> {
 
   @override
   Widget build(BuildContext context) {
+     var _isCoach = false;
+    _isCoach = Provider.of<UserProfile>(context).coach;
     return Scaffold(
+      backgroundColor: Color.fromARGB(230, 46, 46, 46),
+      appBar: PreferredSize(preferredSize: Size.fromHeight(60), child: CustomAppBar()),
+      drawer: AppDrawer(),
       body: _pages[_selectedPage],
       bottomNavigationBar: Container(
         height: 60,
