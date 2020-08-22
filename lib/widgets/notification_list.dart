@@ -19,6 +19,7 @@ class NotificationList extends StatelessWidget {
       padding: EdgeInsets.all(5),
       height: 200,
       child: ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
           itemCount: filteredList.length < 4 // if there are fewer then 4.
               ? filteredList.length
               : 4,

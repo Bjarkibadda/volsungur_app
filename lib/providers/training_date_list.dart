@@ -8,7 +8,6 @@ import './training_date_model.dart';
 class TrainingList with ChangeNotifier {
   List<Training> _allTrainings = [];
   final String authToken;
-  
 
   TrainingList(this.authToken, this._allTrainings);
 
@@ -27,7 +26,9 @@ class TrainingList with ChangeNotifier {
         (trainingId, practiceData) {
           DateTime newDate = DateTime.parse(practiceData['date']);
           int diffDays = newDate.difference(DateTime.now()).inDays;
-          if (diffDays < 7) {
+          print(newDate.day);
+          print(DateTime.now().day);
+          if (diffDays < 7 && newDate.day.compareTo(DateTime.now().day) >= 0) {
             loadedPractices.add(Training(
                 id: trainingId,
                 location: practiceData['location'],
@@ -40,6 +41,9 @@ class TrainingList with ChangeNotifier {
       );
     }
     _allTrainings = loadedPractices;
+    loadedPractices.sort((a, b) {
+      return a.date.compareTo(b.date);
+    });
     notifyListeners();
   }
 
@@ -54,7 +58,6 @@ class TrainingList with ChangeNotifier {
           'time': newGroupTraining.time,
           'date': newGroupTraining.date.toIso8601String()
         }));
-        print(newGroupTraining.time);
-
+    print(newGroupTraining.time);
   }
 }

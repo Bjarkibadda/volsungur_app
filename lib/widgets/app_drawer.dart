@@ -3,14 +3,10 @@ import 'package:volsungur_app/providers/profile.dart';
 import 'package:volsungur_app/screens/add_group_training_screen.dart';
 import 'package:volsungur_app/screens/add_notification_screen.dart';
 import 'package:volsungur_app/screens/add_practice_screen.dart';
-import 'package:volsungur_app/screens/init_screen.dart';
 import '../providers/auth.dart';
 import 'package:provider/provider.dart';
 
 class AppDrawer extends StatelessWidget {
-  final bool _isCoach;
-
-  AppDrawer(this._isCoach);
   // void didChangeDependencies(){
   //   Provider.of<UserProfile>(context)
   // }
@@ -20,60 +16,65 @@ class AppDrawer extends StatelessWidget {
     var _isCoach = false;
     _isCoach = Provider.of<UserProfile>(context).coach;
     print(_isCoach);
-    return 
-         Drawer(
-            child: Column(
-            children: <Widget>[
-              AppBar(
-                title: Text('Aðgerðir'),
-                automaticallyImplyLeading: false,
-              ),
-              Divider(),
-              ListTile(
-                leading: Icon(Icons.payment),
-                title: Text('Flokkur'),
-                onTap: () {
-                  Navigator.of(context)
-                      .pushReplacementNamed(InitScreen.routeName);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.exit_to_app),
-                title: Text('Skrá út'),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pushReplacementNamed('/');
-                  Provider.of<Auth>(context, listen: false).logout();
-                },
-              ),
-              _isCoach ? 
-                ListTile(
-                  leading: Icon(Icons.power),
-                  title: Text('Bæta við æfingu'),
+    return Drawer(
+        child: Container(
+      decoration: BoxDecoration(
+        color: Colors.black,
+      ),
+      child: ListView(
+        children: <Widget>[
+          Container(
+            color: Colors.black,
+            child: AppBar(
+              title: Text('Aðgerðir', style: TextStyle(color: Colors.white)),
+              automaticallyImplyLeading: false,
+            ),
+          ),
+          Divider(),
+          _isCoach
+              ? ListTile(
+                  leading: Icon(Icons.power, color: Colors.white),
+                  title: Text('Bæta við æfingu',
+                      style: TextStyle(color: Colors.white)),
                   onTap: () {
-                    Navigator.of(context)
-                        .pushNamed(AddPractice.routeName);
+                    Navigator.of(context).pushNamed(AddPractice.routeName);
                   },
-                ): Container(),
-                _isCoach ?
-                 ListTile(
-                  leading: Icon(Icons.power),
-                  title: Text('Bæta við tilkynningu'),
+                )
+              : Container(),
+          _isCoach
+              ? ListTile(
+                  leading: Icon(Icons.power, color: Colors.white),
+                  title: Text('Bæta við tilkynningu',
+                      style: TextStyle(color: Colors.white)),
                   onTap: () {
-                    Navigator.of(context)
-                        .pushNamed(AddNotification.routeName);
+                    Navigator.of(context).pushNamed(AddNotification.routeName);
                   },
-                ) : Container(),
-                _isCoach ?
-                 ListTile(
-                  leading: Icon(Icons.power),
-                  title: Text('Bæta við æfingaáætlun'),
+                )
+              : Container(),
+          _isCoach
+              ? ListTile(
+                  leading: Icon(Icons.power, color: Colors.white),
+                  title: Text('Bæta við æfingaáætlun',
+                      style: TextStyle(color: Colors.white)),
                   onTap: () {
-                    Navigator.of(context)
-                        .pushNamed(AddGroupTraining.routeName);
+                    Navigator.of(context).pushNamed(AddGroupTraining.routeName);
                   },
-                ) : Container()
-            ],
-          ));
+                )
+              : Container(),
+          ListTile(
+            leading: Icon(
+              Icons.exit_to_app,
+              color: Colors.white,
+            ),
+            title: Text('Skrá út', style: TextStyle(color: Colors.white)),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushReplacementNamed('/');
+              Provider.of<Auth>(context, listen: false).logout();
+            },
+          ),
+        ],
+      ),
+    ));
   }
 }

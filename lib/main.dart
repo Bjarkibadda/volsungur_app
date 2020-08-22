@@ -76,6 +76,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primaryColor: Colors.green,
               accentColor: Colors.black,
+              canvasColor: Colors.black,
               fontFamily: 'Alata'
             ),
             home: auth.isSigningUp

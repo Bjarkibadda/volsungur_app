@@ -1,6 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/notification_model.dart' as notif;
 import '../providers/training_date_list.dart';
 import '../providers/training_date_model.dart';
 import 'package:intl/intl.dart';
@@ -27,6 +27,7 @@ class _AddGroupTraining extends State<AddGroupTraining> {
   DateTime _pickedDate = DateTime.now();
 
   get genderPick {
+    // return the gender
     if (_genderPick == Gender.KK) {
       return true;
     } else {
@@ -36,6 +37,7 @@ class _AddGroupTraining extends State<AddGroupTraining> {
 
   Future<void> _addGroupTraining() async {
     if (!_formKey.currentState.validate()) {
+      // validates user input.
       return;
     }
     _formKey.currentState.save();
@@ -63,7 +65,6 @@ class _AddGroupTraining extends State<AddGroupTraining> {
         child: Center(
           child: Container(
             color: Colors.white,
-            //height: _screenSize.height * 0.8,
             width: _screenSize.width * 0.8,
             height: _screenSize.height * 0.6,
             child: SingleChildScrollView(
@@ -105,30 +106,34 @@ class _AddGroupTraining extends State<AddGroupTraining> {
                             //style: TextStyle(color: Colors.white),
                           ),
                         ),
-                        SizedBox(height: 20,),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Row(
                           children: <Widget>[
                             Text(DateFormat('dd-MM-yyy')
                                 .format(_pickedDate)
                                 .toString()),
-                                SizedBox(width:30),
+                            SizedBox(width: 20),
                             RaisedButton(
-                              color: Colors.green,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                              child: Text('Veldu dagsetningu'),
-                              onPressed: () {
-                                showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(2020),
-                                        lastDate: DateTime(2025))
-                                    .then((date) {
-                                  setState(() {
-                                    _pickedDate = date;
+                                color: Colors.green,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Text('Veldu dagsetningu'),
+                                onPressed: () {
+                                  showDatePicker(
+                                          context: context,
+                                          initialDate: DateTime.now(),
+                                          firstDate: DateTime(2020),
+                                          lastDate: DateTime(2025))
+                                      .then((date) {
+                                    if (date != null) {
+                                      setState(() {
+                                        _pickedDate = date;
+                                      });
+                                    }
                                   });
-                                });
-                              },
-                            ),
+                                }),
                           ],
                         ),
                         TextFormField(
