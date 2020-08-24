@@ -27,10 +27,11 @@ class _InitScreenState extends State<InitScreen> {
      var _isCoach = false;
     _isCoach = Provider.of<UserProfile>(context).coach;
     return Scaffold(
+      
       backgroundColor: Color.fromARGB(230, 46, 46, 46),
       appBar: PreferredSize(preferredSize: Size.fromHeight(60), child: CustomAppBar()),
       drawer: AppDrawer(),
-      body: _pages[_selectedPage],
+      body:  _pages[_selectedPage],
       bottomNavigationBar: Container(
         height: 60,
         child: BottomNavigationBar(

@@ -16,33 +16,35 @@ class Notifications with ChangeNotifier {
   Future<void> fetchNotifications() async {
     final url =
         'https://volsungurapp.firebaseio.com/Notifications.json?auth=$authToken';
-    try{final rsp = await http.get(url);
-    print('status code: ${rsp.statusCode}');
-    if (rsp.statusCode == 200){
-    final _data = json.decode(rsp.body) as Map<String, dynamic>;
-    final List<notice.Notification> loadedPractices = [];
-    _data.forEach(
-      (notificationId, notificationData) {
-        loadedPractices.add(
-          notice.Notification(
-            id: notificationId,
-            title: notificationData['title'],
-            subject: notificationData['subject'],
-            gender: notificationData['gender'],
-            grp: notificationData['grp'],
-            date: DateTime.parse(notificationData['date']),
-          ),
-        );
-      },
-    );
-    _allNotifications = List.from(loadedPractices.reversed);
-    notifyListeners();
-    }
-    } on Error catch(error){
-      print(error);
     
-    } 
-
+    // get notifications 
+    try {
+      final rsp = await http.get(url);
+      print(rsp.statusCode);
+      if (rsp.statusCode == 200) {
+        final _data = json.decode(rsp.body) as Map<String, dynamic>;
+        final List<notice.Notification> loadedPractices = [];
+        _data.forEach(
+          (notificationId, notificationData) {
+            loadedPractices.add(
+              notice.Notification(
+                id: notificationId,
+                title: notificationData['title'],
+                subject: notificationData['subject'],
+                gender: notificationData['gender'],
+                grp: notificationData['grp'],
+                date: DateTime.parse(notificationData['date']),
+              ),
+            );
+          },
+        );
+        _allNotifications = List.from(loadedPractices.reversed);
+        notifyListeners();
+      }
+    } on Error catch (error) {
+      print('eg er inn í error ruglinu andskotinn');
+      print(error);
+    }
   }
 
   Future<void> addNotification(notice.Notification newNotification) async {
@@ -51,16 +53,17 @@ class Notifications with ChangeNotifier {
     print('hello world: ${newNotification.subject}');
     final url =
         'https://volsungurapp.firebaseio.com/Notifications.json?auth=$authToken';
-    try{final rsp = await http.post(url,
-        body: json.encode({
-          'title': newNotification.title,
-          'gender': newNotification.gender,
-          'grp': newNotification.grp,
-          'subject': newNotification.subject,
-          'date': date.toIso8601String()
-        }));
-  } catch(Error){
-    throw Error;
+    try {
+      final rsp = await http.post(url,
+          body: json.encode({
+            'title': newNotification.title,
+            'gender': newNotification.gender,
+            'grp': newNotification.grp,
+            'subject': newNotification.subject,
+            'date': date.toIso8601String()
+          }));
+    } catch (Error) {
+      throw Error;
+    }
   }
-}
 }
